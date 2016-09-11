@@ -4,6 +4,8 @@
   "description": "Base to start a react project",
   "scripts": {
     "start": "node ./bin/www",
+    "start-dev": "node ./node_modules/concurrently/src/main.js --kill-others \"node ./node_modules/nodemon/bin/nodemon.js ./bin/www.js\" \"node ./node_modules/webpack/bin/webpack.js --progress --colors --watch\" \"node ./node_modules/gulp/bin/gulp.js watch\"",
+    "compile": "node ./node_modules/concurrently/src/main.js --kill-others \"node ./node_modules/webpack/bin/webpack.js\" \"node ./node_modules/gulp/bin/gulp.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,16 +20,28 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "~1.15.1",
+    "concurrently": "^2.2.0",
     "cookie-parser": "~1.4.3",
     "express": "~4.13.4",
     "lodash": "^4.15.0",
     "lodash-express": "0.0.3",
     "morgan": "~1.7.0",
+    "nodemon": "^1.10.2",
+    "react": "^15.3.1",
     "serve-favicon": "~2.3.0",
     "winston": "^2.2.0"
   },
   "devDependencies": {
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
     "eslint": "^3.5.0",
-    "eslint-plugin-react": "^6.2.0"
+    "eslint-plugin-react": "^6.2.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-clean-css": "^2.0.12",
+    "gulp-less": "^3.1.0",
+    "gulp-watch": "^4.3.9",
+    "webpack": "^1.13.2"
   }
 }
