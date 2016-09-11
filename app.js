@@ -1,5 +1,5 @@
 'use strict';
-
+const env = process.env.NODE_ENV || 'development';
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const logger = require('winston');
 const exampleRoutes = require('./routes/example');
 const lodashExpress = require('lodash-express');
+const compression = require('compression');
 
 const app = express();
 
@@ -16,6 +17,10 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 lodashExpress(app, 'html');
 app.set('view engine', 'html');
+
+if(env === 'production') {
+  app.use(compression());
+}
 
 const winstonStream = {
   write: message => {
