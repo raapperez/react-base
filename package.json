@@ -4,8 +4,8 @@
   "description": "Base to start a react project",
   "scripts": {
     "start": "node ./node_modules/cross-env/bin/cross-env.js NODE_ENV=production node ./bin/www",
+    "compile": "node ./node_modules/cross-env/bin/cross-env.js NODE_ENV=production node ./node_modules/concurrently/src/main.js \"node ./node_modules/webpack/bin/webpack.js\" \"node ./node_modules/gulp/bin/gulp.js\"",
     "start-dev": "node ./node_modules/concurrently/src/main.js --kill-others \"node ./node_modules/nodemon/bin/nodemon.js ./bin/www.js\" \"node ./node_modules/webpack/bin/webpack.js --progress --colors --watch\" \"node ./node_modules/gulp/bin/gulp.js watch\"",
-    "compile": "node ./node_modules/cross-env/bin/cross-env.js NODE_ENV=production node ./node_modules/concurrently/src/main.js --kill-others \"node ./node_modules/webpack/bin/webpack.js\" \"node ./node_modules/gulp/bin/gulp.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -31,6 +31,7 @@
     "morgan": "~1.7.0",
     "nodemon": "^1.10.2",
     "react": "^15.3.1",
+    "react-dom": "^15.3.1",    
     "react-redux": "^4.4.5",
     "react-router": "^2.8.0",
     "redux": "^3.6.0",
@@ -49,7 +50,6 @@
     "gulp-clean-css": "^2.0.12",
     "gulp-less": "^3.1.0",
     "gulp-watch": "^4.3.9",
-    "react-dom": "^15.3.1",
     "webpack": "^1.13.2"
   }
 }

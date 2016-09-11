@@ -21,10 +21,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var ExamplePage = function (_Component) {
     _inherits(ExamplePage, _Component);
 
-    function ExamplePage() {
+    function ExamplePage(props) {
         _classCallCheck(this, ExamplePage);
 
-        return _possibleConstructorReturn(this, (ExamplePage.__proto__ || Object.getPrototypeOf(ExamplePage)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (ExamplePage.__proto__ || Object.getPrototypeOf(ExamplePage)).call(this, props));
     }
 
     _createClass(ExamplePage, [{
@@ -33,7 +33,7 @@ var ExamplePage = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                'Hellow World 3'
+                'Hellow World'
             );
         }
     }]);

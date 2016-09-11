@@ -18,7 +18,7 @@ app.set('views', path.join(__dirname, 'views'));
 lodashExpress(app, 'html');
 app.set('view engine', 'html');
 
-if(env === 'production') {
+if (env === 'production') {
   app.use(compression());
 }
 
