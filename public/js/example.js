@@ -20786,8 +20786,6 @@
 
 	var _exampleStore = __webpack_require__(260);
 
-	var _exampleStore2 = _interopRequireDefault(_exampleStore);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var routes = exports.routes = _react2.default.createElement(
@@ -20801,10 +20799,10 @@
 	    _react2.default.createElement(_reactRouter.Redirect, { from: '*', to: '/index' })
 	);
 
-	var serverSide = exports.serverSide = function serverSide(renderProps) {
+	var serverSide = exports.serverSide = function serverSide(renderProps, initialState) {
 	    return _react2.default.createElement(
 	        _reactRedux.Provider,
-	        { store: _exampleStore2.default },
+	        { store: (0, _exampleStore.getStore)(initialState) },
 	        _react2.default.createElement(_reactRouter.RouterContext, renderProps)
 	    );
 	};
@@ -20812,7 +20810,7 @@
 	var clientSide = exports.clientSide = function clientSide(renderProps) {
 	    return _react2.default.createElement(
 	        _reactRedux.Provider,
-	        { store: _exampleStore2.default },
+	        { store: (0, _exampleStore.getStore)(window.__PRELOADED_STATE__) },
 	        _react2.default.createElement(_reactRouter.Router, renderProps)
 	    );
 	};
@@ -28641,6 +28639,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.getStore = undefined;
 
 	var _redux = __webpack_require__(244);
 
@@ -28672,9 +28671,10 @@
 	var rootReducer = function rootReducer(state, action) {
 	    return combinedReducers(state, action);
 	};
-	var store = (0, _redux.createStore)(rootReducer);
 
-	exports.default = store;
+	var getStore = exports.getStore = function getStore(initialState) {
+	    return (0, _redux.createStore)(rootReducer, initialState);
+	};
 
 /***/ },
 /* 261 */

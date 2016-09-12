@@ -19,6 +19,7 @@ const combinedReducers = combineReducers({
 });
 
 const rootReducer = (state, action) => combinedReducers(state, action);
-const store = createStore(rootReducer);
 
-export default store;
+export const getStore = (initialState) => {
+    return createStore(rootReducer, initialState);
+};

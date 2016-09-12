@@ -14,9 +14,13 @@ router.get('*', function (req, res, next) {
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
-      res.status(200).render('example', {
+
+      const initialState = {value: 10};
+
+      res.status(200).render('example', {        
         data: {
-          entryPoint: ReactDOMServer.renderToString(serverSide(renderProps))
+          entryPoint: ReactDOMServer.renderToString(serverSide(renderProps, initialState)),
+          initialState
         }
       });
     } else {

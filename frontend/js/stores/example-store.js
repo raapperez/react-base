@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.getStore = undefined;
 
 var _redux = require('redux');
 
@@ -34,6 +35,7 @@ var combinedReducers = (0, _redux.combineReducers)({
 var rootReducer = function rootReducer(state, action) {
     return combinedReducers(state, action);
 };
-var store = (0, _redux.createStore)(rootReducer);
 
-exports.default = store;
+var getStore = exports.getStore = function getStore(initialState) {
+    return (0, _redux.createStore)(rootReducer, initialState);
+};

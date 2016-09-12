@@ -23,8 +23,6 @@ var _reactRedux = require('react-redux');
 
 var _exampleStore = require('./stores/example-store');
 
-var _exampleStore2 = _interopRequireDefault(_exampleStore);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var routes = exports.routes = _react2.default.createElement(
@@ -38,10 +36,10 @@ var routes = exports.routes = _react2.default.createElement(
     _react2.default.createElement(_reactRouter.Redirect, { from: '*', to: '/index' })
 );
 
-var serverSide = exports.serverSide = function serverSide(renderProps) {
+var serverSide = exports.serverSide = function serverSide(renderProps, initialState) {
     return _react2.default.createElement(
         _reactRedux.Provider,
-        { store: _exampleStore2.default },
+        { store: (0, _exampleStore.getStore)(initialState) },
         _react2.default.createElement(_reactRouter.RouterContext, renderProps)
     );
 };
@@ -49,7 +47,7 @@ var serverSide = exports.serverSide = function serverSide(renderProps) {
 var clientSide = exports.clientSide = function clientSide(renderProps) {
     return _react2.default.createElement(
         _reactRedux.Provider,
-        { store: _exampleStore2.default },
+        { store: (0, _exampleStore.getStore)(window.__PRELOADED_STATE__) },
         _react2.default.createElement(_reactRouter.Router, renderProps)
     );
 };
