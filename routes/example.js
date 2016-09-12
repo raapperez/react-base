@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const {match} = require('react-router');
-const example = require('../frontend/js/example').default;
+const {serverSide} = require('../frontend/js/example');
 const {routes} = require('../frontend/js/example');
 const ReactDOMServer = require('react-dom/server');
 
@@ -16,7 +16,7 @@ router.get('*', function (req, res, next) {
     } else if (renderProps) {
       res.status(200).render('example', {
         data: {
-          entryPoint: ReactDOMServer.renderToString(example(renderProps))
+          entryPoint: ReactDOMServer.renderToString(serverSide(renderProps))
         }
       });
     } else {

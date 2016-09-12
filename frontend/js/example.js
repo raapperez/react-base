@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.routes = undefined;
+exports.clientSide = exports.serverSide = exports.routes = undefined;
 
 var _react = require('react');
 
@@ -14,6 +14,10 @@ var _reactRouter = require('react-router');
 var _example = require('./pages/example');
 
 var _example2 = _interopRequireDefault(_example);
+
+var _page = require('./pages/page2');
+
+var _page2 = _interopRequireDefault(_page);
 
 var _reactRedux = require('react-redux');
 
@@ -30,10 +34,19 @@ var routes = exports.routes = _react2.default.createElement(
             return children;
         } },
     _react2.default.createElement(_reactRouter.Route, { path: '/index', component: _example2.default }),
+    _react2.default.createElement(_reactRouter.Route, { path: '/page2', component: _page2.default }),
     _react2.default.createElement(_reactRouter.Redirect, { from: '*', to: '/index' })
 );
 
-exports.default = function (renderProps) {
+var serverSide = exports.serverSide = function serverSide(renderProps) {
+    return _react2.default.createElement(
+        _reactRedux.Provider,
+        { store: _exampleStore2.default },
+        _react2.default.createElement(_reactRouter.RouterContext, renderProps)
+    );
+};
+
+var clientSide = exports.clientSide = function clientSide(renderProps) {
     return _react2.default.createElement(
         _reactRedux.Provider,
         { store: _exampleStore2.default },
