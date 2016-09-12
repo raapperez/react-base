@@ -10,6 +10,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = require('react-redux');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30,10 +32,13 @@ var ExamplePage = function (_Component) {
     _createClass(ExamplePage, [{
         key: 'render',
         value: function render() {
+            var value = this.props.value;
+
             return _react2.default.createElement(
                 'div',
                 null,
-                'Hellow World'
+                'Hellow World ',
+                value
             );
         }
     }]);
@@ -41,4 +46,12 @@ var ExamplePage = function (_Component) {
     return ExamplePage;
 }(_react.Component);
 
-exports.default = ExamplePage;
+ExamplePage.propTypes = {
+    value: _react.PropTypes.number
+};
+
+exports.default = (0, _reactRedux.connect)(function (state) {
+    return { value: state.value };
+}, function (dispatch) {
+    return {};
+})(ExamplePage);

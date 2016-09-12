@@ -3,9 +3,10 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var ACTION = exports.ACTION = 'ACTION';
-var action = exports.action = function action() {
+var SET_VALUE = exports.SET_VALUE = 'SET_VALUE';
+var setValue = exports.setValue = function setValue(value) {
     return {
-        type: ACTION
+        type: SET_VALUE,
+        value: value
     };
 };

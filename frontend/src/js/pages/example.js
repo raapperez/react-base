@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
 
 class ExamplePage extends Component {
 
@@ -9,10 +10,20 @@ class ExamplePage extends Component {
     }
 
     render() {
+        const {value} = this.props;
         return (
-            <div>Hellow World</div>
+            <div>Hellow World {value}</div>
         );
     }
 }
 
-export default ExamplePage;
+ExamplePage.propTypes = {
+    value: PropTypes.number
+};
+
+export default connect(
+    state => ({ value: state.value }),
+    dispatch => ({
+
+    })
+)(ExamplePage);
