@@ -7,7 +7,15 @@
     Example
   </title>
 
-  <link rel="stylesheet" media="all" href="/assets/example.css">
+  <%
+    if(!data.isDev) {
+  %>
+    <link rel="stylesheet" media="all" href="/assets/example.css">
+  <%
+    }
+   %>
+
+  
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
   
 </head>

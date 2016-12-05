@@ -4,10 +4,13 @@
   "description": "Base to start a react project",
   "scripts": {
     "start": "node ./node_modules/cross-env/bin/cross-env.js NODE_ENV=production node ./bin/www",
-    "compile": "node ./node_modules/cross-env/bin/cross-env.js NODE_ENV=production babel ./frontend/src/ --out-dir ./frontend/build",
+    "compile": "node ./node_modules/concurrently/src/main.js \"node ./node_modules/cross-env/bin/cross-env.js NODE_ENV=production ./node_modules/webpack/bin/webpack.js --colors\" \"node ./node_modules/cross-env/bin/cross-env.js NODE_ENV=production node node_modules/babel-cli/bin/babel.js ./frontend/src/ --out-dir ./frontend/build\"",
     "start-dev": "node ./node_modules/cross-env/bin/cross-env.js NODE_ENV=development node node_modules/babel-cli/bin/babel-node.js bin/www.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+
+      "start-dev": "node ./node_modules/concurrently/src/main.js --kill-others \"node ./node_modules/nodemon/bin/nodemon.js --delay 1 ./bin/www.js\" \"node ./node_modules/webpack/bin/webpack.js --colors --watch\" \"node ./node_modules/gulp/bin/gulp.js watch\"",
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/raapperez/react-base.git"

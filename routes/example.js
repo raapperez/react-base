@@ -5,12 +5,15 @@ const express = require('express');
 const router = express.Router();
 const {match} = require('react-router');
 const ReactDOMServer = require('react-dom/server');
+const _ = require('lodash');
+
+const isDev = env === 'development';
 
 let serverSide;
 let routes;
 let reload;
 
-if (env === 'development') {
+if (isDev) {
   reload = require('require-reload')(require);
   serverSide = reload('../frontend/src/js/example').serverSide;
   routes = reload('../frontend/src/js/example').routes;
@@ -21,7 +24,7 @@ if (env === 'development') {
 
 router.get('*', function (req, res, next) {
 
-  if (env === 'development') {
+  if (isDev) {
     require('require-reload').emptyCache();
     serverSide = reload('../frontend/src/js/example').serverSide;
     routes = reload('../frontend/src/js/example').routes;
@@ -37,7 +40,9 @@ router.get('*', function (req, res, next) {
       const initialState = { value: 10 };
 
       res.status(200).render('example', {
+        _,
         data: {
+          isDev, 
           entryPoint: ReactDOMServer.renderToString(serverSide(renderProps, initialState)),
           initialState
         }
