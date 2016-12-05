@@ -1,5 +1,7 @@
 'use strict';
 
+import '../less/example-main.less';
+
 import ReactDOM from 'react-dom';
 import {clientSide, routes} from './example';
 import { browserHistory  } from 'react-router';
