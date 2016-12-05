@@ -2,6 +2,7 @@
 
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
+import Co from './co';
 
 class ExamplePage extends Component {
 
@@ -12,7 +13,9 @@ class ExamplePage extends Component {
     render() {
         const {value} = this.props;
         return (
-            <div>Hello World16 {value}</div>
+            <div>Hello World1 {value}
+            <Co />
+            </div>
         );
     }
 }

@@ -47,6 +47,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({ 'process.env.NODE_ENV': `'${env}'` }),
         new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin()
     ]
 };
