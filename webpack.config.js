@@ -14,7 +14,7 @@ const _plugins = [
 
 ];
 
-if(env === 'production'){
+if (env === 'production') {
     _plugins.push(new webpack.optimize.UglifyJsPlugin());
 }
 
@@ -42,7 +42,7 @@ module.exports = {
             {
                 test: /\.less$/,
                 loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
-            },       
+            },
             {
                 test: /\.js?$/,
                 exclude: /node_modules/,
