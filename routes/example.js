@@ -1,13 +1,32 @@
 'use strict';
 
+const env = process.env.NODE_ENV || 'development';
 const express = require('express');
 const router = express.Router();
 const {match} = require('react-router');
-const {serverSide} = require('../frontend/js/example');
-const {routes} = require('../frontend/js/example');
 const ReactDOMServer = require('react-dom/server');
 
+let serverSide;
+let routes;
+let reload;
+
+if (env === 'development') {
+  reload = require('require-reload')(require);
+  serverSide = reload('../frontend/src/js/example').serverSide;
+  routes = reload('../frontend/src/js/example').routes;
+} else {
+  serverSide = require('../frontend/js/example').serverSide;
+  routes = require('../frontend/js/example').routes;
+}
+
 router.get('*', function (req, res, next) {
+
+  if (env === 'development') {
+    require('require-reload').emptyCache();
+    serverSide = reload('../frontend/src/js/example').serverSide;
+    routes = reload('../frontend/src/js/example').routes;
+  }
+
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
     if (error) {
       next(error);
@@ -15,9 +34,9 @@ router.get('*', function (req, res, next) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
 
-      const initialState = {value: 10};
+      const initialState = { value: 10 };
 
-      res.status(200).render('example', {        
+      res.status(200).render('example', {
         data: {
           entryPoint: ReactDOMServer.renderToString(serverSide(renderProps, initialState)),
           initialState

@@ -17,7 +17,6 @@ if (env === 'development') {
   const webpack = require('webpack');
   const webpackConfig = require('./webpack.config');
   const webpackMiddleware = require('webpack-dev-middleware');
-  console.log(webpackConfig.output.publicPath);
   const compiler = webpack(webpackConfig);
 
   app.use(webpackMiddleware(compiler, {
@@ -29,7 +28,8 @@ if (env === 'development') {
     publicPath: webpackConfig.output.publicPath,
     stats: {
       colors: true
-    }
+    },
+    serverSideRender: true
   }));
 
   app.use(require('webpack-hot-middleware')(compiler));
