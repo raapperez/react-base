@@ -37,7 +37,7 @@ var ExamplePage = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                'Hellow World ',
+                'Hello World6 ',
                 value
             );
         }

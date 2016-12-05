@@ -12,7 +12,7 @@ class ExamplePage extends Component {
     render() {
         const {value} = this.props;
         return (
-            <div>Hellow World {value}</div>
+            <div>Hello World10 {value}</div>
         );
     }
 }

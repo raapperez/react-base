@@ -13,6 +13,28 @@ const compression = require('compression');
 
 const app = express();
 
+if (env === 'development') {
+  const webpack = require('webpack');
+  const webpackConfig = require('./webpack.config');
+  const webpackMiddleware = require('webpack-dev-middleware');
+  console.log(webpackConfig.output.publicPath);
+  const compiler = webpack(webpackConfig);
+
+  app.use(webpackMiddleware(compiler, {
+    lazy: false,
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: true
+    },
+    publicPath: webpackConfig.output.publicPath,
+    stats: {
+      colors: true
+    }
+  }));
+
+  app.use(require('webpack-hot-middleware')(compiler));
+}
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 lodashExpress(app, 'html');

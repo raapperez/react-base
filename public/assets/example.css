@@ -1,26 +1,31 @@
-*, label, h1, h2, h3, h4, h5, h6, ul, ol {
+*,
+label,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol {
   padding: 0;
   margin: 0;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-
 a {
   cursor: pointer;
   text-decoration: none;
-  
-  &:hover, &:focus {
-    text-decoration: none;
-  }
 }
-
+a:hover,
+a:focus {
+  text-decoration: none;
+}
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: lightgreen;
-  font-size: 1em;
+  background-color: lightsteelblue;
 }
-
 .no-select {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -28,4 +33,4 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}   
+}

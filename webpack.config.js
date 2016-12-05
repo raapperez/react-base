@@ -4,28 +4,37 @@ const webpack = require('webpack');
 const env = process.env.NODE_ENV || 'development';
 const LessPluginCleanCSS = require('less-plugin-clean-css');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+const path = require('path');
 
 console.log(`Running webpack in ${env}`);
 
 const _plugins = [
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': `'${env}'` }),
-    new ExtractTextPlugin('../css/[name].css')
+    // new ExtractTextPlugin('[name].css')
 
 ];
 
-if (env === 'production') {
-    _plugins.push(new webpack.optimize.UglifyJsPlugin());
+switch (env) {
+    case 'development': {
+        _plugins.push(new webpack.optimize.OccurenceOrderPlugin());
+        _plugins.push(new webpack.HotModuleReplacementPlugin());
+        break;
+    }
+    case 'production': {
+        _plugins.push(new webpack.optimize.UglifyJsPlugin());
+        break;
+    }
 }
 
 const preLoaders = [];
 
 module.exports = {
     entry: {
-        'example': './frontend/src/js/example-entry.js'
+        'example': ['./frontend/src/js/example-entry.js', 'webpack-hot-middleware/client']
     },
     output: {
-        path: './public/js',
+        path: path.join(__dirname, 'public/assets'),
+        publicPath: '/assets/',
         filename: '[name].js'
     },
     module: {
@@ -41,7 +50,8 @@ module.exports = {
         loaders: [
             {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
+                loader: 'style-loader!css-loader!less-loader'
+                //loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
             },
             {
                 test: /\.js?$/,
