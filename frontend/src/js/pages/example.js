@@ -12,7 +12,7 @@ class ExamplePage extends Component {
     render() {
         const {value} = this.props;
         return (
-            <div>Hello World17 {value}</div>
+            <div>Hello World13 {value}</div>
         );
     }
 }

@@ -15,8 +15,8 @@ if (env === 'development') {
   serverSide = reload('../frontend/src/js/example').serverSide;
   routes = reload('../frontend/src/js/example').routes;
 } else {
-  serverSide = require('../frontend/js/example').serverSide;
-  routes = require('../frontend/js/example').routes;
+  serverSide = require('../frontend/build/js/example').serverSide;
+  routes = require('../frontend/build/js/example').routes;
 }
 
 router.get('*', function (req, res, next) {
