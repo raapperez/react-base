@@ -1,0 +1,136 @@
+
+.advanced-filter {
+    
+    border: 1px solid black;
+
+    display: flex;
+
+    .box {
+        overflow-y: auto;
+        padding: 8px;
+
+        display: flex;
+
+        .no-select();
+
+        .chip {
+            padding-right: 20px;
+            display: flex;
+
+            .left {
+                label {
+                    font-size: 0.6em;
+                    display: block;
+                    white-space: nowrap;
+                    
+                }
+
+                span {
+                    background-color: rgba(204, 153, 255, 1);
+                    border: 1px solid black;
+                    color: white;
+                    font-size: 0.8em;
+                    padding: 2px 8px;
+                    display: block;
+                    border-radius: 4px;
+                    white-space: nowrap;
+
+                }
+            }
+
+            .right {
+                padding-left: 8px;
+                display: flex;
+                align-content: center;
+                align-items: center;
+
+                .close-btn {
+                    display: block;
+                }
+            }
+
+
+
+            
+        }
+    }
+
+    > .right {
+
+        padding: 0 10px;
+
+        .no-select();
+
+        display: flex;
+        align-items: center;
+
+        position: relative;
+        
+        > a {
+            border: 1px solid black;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 1.6em;
+            position: relative;
+        }
+
+    }
+
+    .popup {
+        position: absolute;
+        top: 60px;
+        right: -110px;
+        width: 300px;
+        height: 400px;
+        box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.3);
+        background-color: white;
+        border-radius: 10px;
+        display: none;
+        outline: 0;
+        border: 1px solid #ababab;
+        padding: 10px;
+        
+        &.active {
+            display: block;
+        }
+
+        .top-triangle {
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 15px 20px 15px;
+            border-color: transparent transparent #ababab transparent;
+            position: absolute;
+            left: 50%;
+            top: -20px;
+        }
+
+        .main-popup-page {
+
+            ul {
+                list-style: none;
+
+                li {
+                
+                    a {
+                        display: block;
+                        padding: 2px 8px;
+                        border: 2px solid transparent;
+
+                        &:hover {
+                            background-color: rgba(204, 153, 255, 1);
+                            border: 2px solid #a066da;
+                            color: white;
+                            
+                            border-radius: 4px;
+                        }
+                    
+                    }
+
+                }
+            }
+
+        }
+
+    }
+}
