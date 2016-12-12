@@ -1,8 +1,12 @@
 'use strict';
 
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import Main from './main';
+
+import Main from './popup-pages/main';
+import Text from './popup-pages/text';
+
+import * as pageType from './popup-pages/page-type';
 
 class Popup extends Component {
 
@@ -10,43 +14,51 @@ class Popup extends Component {
         super(props);
 
         this.state = {
-            isActive: false
+            isActive: false,
+            selectedItem: null
         };
 
         this.getIsActive = this.getIsActive.bind(this);
         this.open = this.open.bind(this);
         this.close = this.close.bind(this);
         this.toggle = this.toggle.bind(this);
+
+        this.selectItem = this.selectItem.bind(this);
+        this.renderMain = this.renderMain.bind(this);
+        this.renderText = this.renderText.bind(this);
+        this.renderSelectedItem = this.renderSelectedItem.bind(this);
+        this.resetSelectedItem = this.resetSelectedItem.bind(this);
+        this.addFilter = this.addFilter.bind(this);
+
     }
 
     getIsActive() {
         const {isActive} = this.state;
-        return isActive;        
+        return isActive;
     }
 
     open() {
         const {popup} = this.refs;
 
         this.setState({
-            isActive: true
+            isActive: true,
+            selectedItem: null
         }, () => {
-            popup.focus(); 
+            popup.focus();
         });
 
     }
 
     close() {
-        setTimeout(() => {
-            this.setState({
-                isActive: false
-            });
-        }, 150);
+        this.setState({
+            isActive: false
+        });
     }
 
     toggle() {
         const {isActive} = this.state;
-        
-        if(isActive) {
+
+        if (isActive) {
             this.close();
             return;
         }
@@ -54,43 +66,93 @@ class Popup extends Component {
         this.open();
     }
 
+    selectItem(item) {
+
+        this.setState({
+            selectedItem: item
+        });
+
+        switch (item.type) {
+            case pageType.TEXT: {
+
+                break;
+            }
+        }
+    }
+
+    resetSelectedItem() {
+        this.setState({
+            selectedItem: null
+        });
+    }
+
+    addFilter(form) {
+        const {selectedItem} = this.state;
+        const {onAddFilter} = this.props;
+
+        onAddFilter({
+            item: selectedItem,
+            form
+        });
+
+        this.close();
+
+    }
+
+    renderMain() {
+        const {config} = this.props;
+
+        const {items} = config;
+
+        return <Main items={items} onSelect={this.selectItem} />;
+
+    }
+
+    renderText() {
+        const {selectedItem} = this.state;
+
+        return <Text {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} />;
+
+    }
+
+    renderSelectedItem() {
+
+        const {selectedItem} = this.state;
+
+        if (selectedItem === null) {
+            return this.renderMain();
+        }
+
+        switch (selectedItem.type) {
+            case pageType.TEXT: {
+                return this.renderText();
+            }
+        }
+
+
+    }
+
     render() {
 
         const {isActive} = this.state;
 
-        const items =[
-            {
-                label: 'Data de criação'
-            },
-            {
-                label: 'Categorias'
-            },
-            {
-                label: 'Bairros'
-            },
-            {
-                label: 'Qualquer campo'
-            },
-            {
-                label: 'Situação'
-            },
-            {
-                label: 'Comentários'
-            }
-        ];
-
         return (
-            <div className={classNames('popup', {active: isActive})} tabIndex="-1" onBlur={this.close} ref="popup">
+            <div className={classNames('popup', { active: isActive })} ref="popup">
+
+                <div className="close" onClick={this.close}></div>
 
                 <div className="top-triangle"></div>
 
-                <Main items={items} onSelect={()=>{}}/>
+                {this.renderSelectedItem()}
+
             </div>
         );
     }
 }
 
 Popup.propTypes = {
+    config: PropTypes.object.isRequired,
+    onAddFilter: PropTypes.func.isRequired
 };
 
 export default Popup;
