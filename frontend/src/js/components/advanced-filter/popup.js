@@ -92,8 +92,6 @@ class Popup extends Component {
     addFilter(form) {
         const {onAddFilter} = this.props;
 
-        console.log(form);
-
         onAddFilter(form);
         
         this.close();

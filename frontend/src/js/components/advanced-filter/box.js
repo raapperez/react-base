@@ -21,7 +21,6 @@ class Box extends Component {
     render() {
 
         const {config, filters} = this.props;
-        console.log(filters);
 
         return (
             <div className='box'>
@@ -29,13 +28,11 @@ class Box extends Component {
                 {_.map(filters, (value, key) => {
                     const item = config.items.find(item => item.key === key);
                     return (
-                        <Async promise={item.getDisplay(value)} then={(val) => (
-                            <Chip key={Math.random()} label={item.label} value={val} onRemove={() => this.removeFilter(key)} />
+                        <Async key={key} promise={item.getDisplay(value)} then={(val) => (
+                            <Chip label={item.label} value={val} onRemove={() => this.removeFilter(key)} />
                         )} pendingRender={(
-                            <Chip key={Math.random()} label={item.label} value="..." onRemove={() => this.removeFilter(key)} />
+                            <Chip label={item.label} value="..." onRemove={() => this.removeFilter(key)} />
                         )} />
-
-
                     );
                 }
                 )}

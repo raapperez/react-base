@@ -2,8 +2,10 @@
 
 import React, { Component, PropTypes } from 'react';
 import layout from './layout';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, SubmissionError } from 'redux-form';
 import _ from 'lodash';
+import Async from 'react-promise';
+import latinize from 'latinize';
 
 class Multi extends Component {
 
@@ -11,23 +13,11 @@ class Multi extends Component {
         super(props);
 
         this.state = {
-            filter: '',
-            options: null
+            filter: ''
         };
 
         this.setFilter = this.setFilter.bind(this);
         this.submit = this.submit.bind(this);
-    }
-
-    componentDidMount() {
-        const {getOptions} = this.props;
-
-        getOptions().then(options => {
-            this.setState({
-                options
-            });
-        });
-
     }
 
     submit(form) {
@@ -36,16 +26,16 @@ class Multi extends Component {
         const values = [];
 
         _.forEach(form[name], (value, key) => {
-            if(value) {
+            if (value) {
                 values.push(key.replace(/^\_/, ''));
             }
         });
 
-        form[name] = values;
-
-        if(!values.length) {
-            return;
+        if (!values.length) {
+            return Promise.reject(new SubmissionError({ _error: 'Must select at least one' }));
         }
+
+        form[name] = values;
 
         onSubmit(form);
     }
@@ -58,8 +48,10 @@ class Multi extends Component {
 
     render() {
 
-        const {title, name, onBack, btnText, handleSubmit, pristine, submitting} = this.props;
-        const {filter, options} = this.state;
+        const {title, name, onBack, btnText, handleSubmit, pristine, submitting, getOptions} = this.props;
+        const {filter} = this.state;
+
+        const adjustedFilter = latinize(filter.toLowerCase());
 
         return layout(title, onBack, (
             <div className="multi-page">
@@ -68,13 +60,17 @@ class Multi extends Component {
 
                 <form onSubmit={handleSubmit(this.submit)}>
                     <div className="options-box">
-                        {options ?
-                            options.map(option => (
+                        <Async promise={getOptions()} then={(options) => (
+                            <div>
+                            {_.sortBy(options, (option => latinize(option.label.toLowerCase()))).filter(option => latinize(option.label.toLowerCase()).indexOf(adjustedFilter) !== -1).map(option => (
                                 <label key={option.value}><Field type="checkbox" component="input" name={`${name}._${option.value}`} />{option.label}</label>
-                            ))
+                            ))}
+                            </div>
+                        )} pendingRender={(
+                            <span>Carregando...</span>
+                        )} />
 
-                            : <span>Carregando...</span>
-                        }
+
 
                     </div>
                     <div>

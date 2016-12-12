@@ -5,7 +5,7 @@ import AdvancedFilter, { pageType } from '../components/advanced-filter';
 
 function getCategoriesOptions() {
     return new Promise((resolve) => {
-        setTimeout(() => {
+        //setTimeout(() => {
             resolve([
                 {
                     value: 5,
@@ -56,7 +56,7 @@ function getCategoriesOptions() {
                     label: 'Entulho na calçada/via pública'
                 }
             ]);
-        }, 500);
+       // }, 500);
     });
 
 }
@@ -115,12 +115,12 @@ class Page2Page extends Component {
                         if (array.length === 1) {
 
                             return getCategoriesOptions().then(categories => {
-                                return categories.find(category => category.value.toString() === array[0]).label;
+                                return categories.find(category => category.value.toString() === array[0]).label.toString();
                             });
 
                         }
 
-                        return Promise.resolve(`${array.length} selectionados`);
+                        return Promise.resolve(`${array.length} selecionados`);
                     },
                     config: {
                         title: 'Categorias',
