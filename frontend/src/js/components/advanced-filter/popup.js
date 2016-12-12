@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 import Main from './popup-pages/main';
 import Text from './popup-pages/text';
+import Multi from './popup-pages/multi';
 
 import * as pageType from './popup-pages/page-type';
 
@@ -26,6 +27,8 @@ class Popup extends Component {
         this.selectItem = this.selectItem.bind(this);
         this.renderMain = this.renderMain.bind(this);
         this.renderText = this.renderText.bind(this);
+        this.renderMulti = this.renderMulti.bind(this);
+
         this.renderSelectedItem = this.renderSelectedItem.bind(this);
         this.resetSelectedItem = this.resetSelectedItem.bind(this);
         this.addFilter = this.addFilter.bind(this);
@@ -88,7 +91,9 @@ class Popup extends Component {
 
     addFilter(form) {
         const {onAddFilter} = this.props;
-        
+
+        console.log(form);
+
         onAddFilter(form);
         
         this.close();
@@ -111,6 +116,12 @@ class Popup extends Component {
 
     }
 
+    renderMulti() {
+        const {selectedItem} = this.state;
+
+        return <Multi {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} />;
+    }
+
     renderSelectedItem() {
 
         const {selectedItem} = this.state;
@@ -122,6 +133,9 @@ class Popup extends Component {
         switch (selectedItem.type) {
             case pageType.TEXT: {
                 return this.renderText();
+            }
+            case pageType.MULTI: {
+                return this.renderMulti();
             }
         }
 

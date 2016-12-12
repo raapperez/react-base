@@ -32,6 +32,7 @@
     "nodemon": "^1.10.2",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
+    "react-promise": "^1.1.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.0",
     "redux": "^3.6.0",

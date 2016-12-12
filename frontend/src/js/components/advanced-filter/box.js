@@ -3,6 +3,7 @@
 import React, { Component, PropTypes } from 'react';
 import Chip from './chip';
 import _ from 'lodash';
+import Async from 'react-promise';
 
 class Box extends Component {
 
@@ -20,6 +21,7 @@ class Box extends Component {
     render() {
 
         const {config, filters} = this.props;
+        console.log(filters);
 
         return (
             <div className='box'>
@@ -27,7 +29,13 @@ class Box extends Component {
                 {_.map(filters, (value, key) => {
                     const item = config.items.find(item => item.key === key);
                     return (
-                        <Chip key={Math.random()} label={item.label} value={item.getDisplay(value)} onRemove={() => this.removeFilter(key)} />
+                        <Async promise={item.getDisplay(value)} then={(val) => (
+                            <Chip key={Math.random()} label={item.label} value={val} onRemove={() => this.removeFilter(key)} />
+                        )} pendingRender={(
+                            <Chip key={Math.random()} label={item.label} value="..." onRemove={() => this.removeFilter(key)} />
+                        )} />
+
+
                     );
                 }
                 )}

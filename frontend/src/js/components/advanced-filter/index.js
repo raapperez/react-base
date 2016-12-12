@@ -13,7 +13,6 @@ class AdvancedFilter extends Component {
         super(props);
 
         this.state = {
-            filters: [],
             value: props.value || {}
         };
 
@@ -59,7 +58,7 @@ class AdvancedFilter extends Component {
     render() {
 
         const {config} = this.props;
-        const {filters, value} = this.state;
+        const {value} = this.state;
 
         return (
             <div className="advanced-filter">
