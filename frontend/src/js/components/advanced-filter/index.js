@@ -13,7 +13,8 @@ class AdvancedFilter extends Component {
         super(props);
 
         this.state = {
-            filters: []
+            filters: [],
+            value: props.value || {}
         };
 
         this.togglePopup = this.togglePopup.bind(this);
@@ -21,40 +22,48 @@ class AdvancedFilter extends Component {
         this.removeFilter = this.removeFilter.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            value: nextProps.value
+        });
+    }
+
     togglePopup() {
         const {popup} = this.refs;
         popup.toggle();
     }
 
-    addFilter(filter) {
-
-        const {filters} = this.state;
+    addFilter(form) {
+        const {onChange} = this.props;
+        const {value} = this.state;
 
         this.setState({
-            filters: [...filters, filter]
+            value: Object.assign({}, value, form)
+        }, () => {
+            onChange(this.state.value);
         });
     }
 
-    removeFilter(filter) {
-
-        const {filters} = this.state;
-
-        console.log(filter);
-        console.log(_.without(filters, filter));
+    removeFilter(key) {
+        const {onChange} = this.props;
+        const {value} = this.state;
 
         this.setState({
-            filters: _.without(filters, filter)
+            value: _.omit(value, key)
+        }, () => {
+            onChange(this.state.value);
         });
+        
     }
 
     render() {
 
         const {config} = this.props;
-        const {filters} = this.state;
+        const {filters, value} = this.state;
 
         return (
             <div className="advanced-filter">
-                <Box filters={filters} onRemoveFilter={this.removeFilter} />
+                <Box config={config} filters={value} onRemoveFilter={this.removeFilter} />
                 <div className="right">
                     <a onClick={this.togglePopup}>+</a>
                     <Popup ref="popup" config={config} onAddFilter={this.addFilter} />
@@ -65,6 +74,8 @@ class AdvancedFilter extends Component {
 }
 
 AdvancedFilter.propTypes = {
+    value: PropTypes.object,
+    onChange: PropTypes.func.isRequired,
     config: PropTypes.object.isRequired
 };
 

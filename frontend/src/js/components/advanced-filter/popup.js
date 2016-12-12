@@ -87,14 +87,10 @@ class Popup extends Component {
     }
 
     addFilter(form) {
-        const {selectedItem} = this.state;
         const {onAddFilter} = this.props;
-
-        onAddFilter({
-            item: selectedItem,
-            form
-        });
-
+        
+        onAddFilter(form);
+        
         this.close();
 
     }

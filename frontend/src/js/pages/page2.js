@@ -7,6 +7,25 @@ class Page2Page extends Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            value: {
+                anyField: 'buraco',
+                // categories: [0, 4, 5, 6, 7],
+                // neighborhoods: [0,2, 4, 5],
+                // createdAt: 'lastWeek',
+                // status: [0,2,3],
+                // isNew: true
+            }
+        };
+
+        this.filterChanged = this.filterChanged.bind(this);
+    }
+
+    filterChanged(value) {
+        this.setState({
+            value
+        });
     }
 
     render() {
@@ -14,9 +33,10 @@ class Page2Page extends Component {
         const config = {
             items: [
                 {
+                    key: 'anyField',
                     label: 'Qualquer campo',
                     type: pageType.TEXT,
-                    getDisplay: filter => filter.form.anyField,
+                    getDisplay: value => value,
                     config: {
                         title: 'Qualquer campo',
                         label: 'Contém',
@@ -47,11 +67,17 @@ class Page2Page extends Component {
             ]
         };
 
+        const {value} = this.state;
+
         return (
             <div>
-
                 <div style={{ marginTop: '50px', marginLeft: '50px', width: '1200px', marginRight: '50px' }}>
-                    <AdvancedFilter config={config} />
+                    <AdvancedFilter value={value} onChange={this.filterChanged} config={config} />
+
+                    <br />
+                    <br />
+
+                    {JSON.stringify(value)}
                 </div>
 
 
