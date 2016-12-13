@@ -7,6 +7,7 @@ import Main from './popup-pages/main';
 import Text from './popup-pages/text';
 import Multi from './popup-pages/multi';
 import Radio from './popup-pages/radio';
+import When from './popup-pages/when';
 
 import * as pageType from './popup-pages/page-type';
 
@@ -94,7 +95,7 @@ class Popup extends Component {
         const {onAddFilter} = this.props;
 
         onAddFilter(form);
-        
+
         this.close();
 
     }
@@ -124,7 +125,13 @@ class Popup extends Component {
     renderRadio() {
         const {selectedItem} = this.state;
 
-        return <Radio {... selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} />;
+        return <Radio {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} />;
+    }
+
+    renderWhen() {
+        const {selectedItem} = this.state;
+
+        return <When {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} />;
     }
 
 
@@ -145,6 +152,9 @@ class Popup extends Component {
             }
             case pageType.RADIO: {
                 return this.renderRadio();
+            }
+            case pageType.WHEN: {
+                return this.renderWhen();
             }
         }
 

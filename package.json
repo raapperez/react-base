@@ -32,6 +32,7 @@
     "morgan": "~1.7.0",
     "nodemon": "^1.10.2",
     "react": "^15.3.1",
+    "react-daterange-picker": "^1.1.0",
     "react-dom": "^15.3.1",
     "react-promise": "^1.1.2",
     "react-redux": "^4.4.5",

@@ -250,7 +250,18 @@ class Page2Page extends Component {
                     }
                 },
                 {
-                    label: 'Data de criação'
+                    key: 'when',
+                    label: 'Data de criação',
+                    type: pageType.WHEN,
+                    getDisplay: value => {
+                        return Promise.resolve(value);
+                    },
+                    config: {
+                        title: 'Data de criação',
+                        name: 'when',
+                        btnText: 'Adicionar filtro',
+                        parseResult: parseInt
+                    }
                 },
                 {
                     key: 'status',

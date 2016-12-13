@@ -5,6 +5,7 @@ import React, { Component, PropTypes } from 'react';
 import Box from './box';
 import Popup from './popup';
 import * as _pageType from './popup-pages/page-type';
+import * as _dateType from './date-type';
 import _ from 'lodash';
 
 class AdvancedFilter extends Component {
@@ -80,3 +81,4 @@ AdvancedFilter.propTypes = {
 
 export default AdvancedFilter;
 export const pageType = _pageType;
+export const dateType = _dateType;
