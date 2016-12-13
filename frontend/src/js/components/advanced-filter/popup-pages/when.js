@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import layout from './layout';
 import { Field, reduxForm } from 'redux-form';
 import RelativeDates from '../relative-dates';
+import DatePicker from '../date-picker';
 import classNames from 'classnames';
 
 class When extends Component {
@@ -53,7 +54,9 @@ class When extends Component {
 
     renderStaticForm() {
         return (
-            <div>static</div>
+            <div>
+                <DatePicker />
+            </div>
         );
     }
 
