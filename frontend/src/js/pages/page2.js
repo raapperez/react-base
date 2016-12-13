@@ -1,8 +1,12 @@
 'use strict';
 
+import moment from 'moment';
+moment.locale('pt-br');
+
 import React, { Component, PropTypes } from 'react';
-import AdvancedFilter, { pageType } from '../components/advanced-filter';
+import AdvancedFilter, { pageType, dateType } from '../components/advanced-filter';
 import _ from 'lodash';
+
 
 function getCategoriesOptions() {
     return new Promise((resolve) => {
@@ -254,6 +258,28 @@ class Page2Page extends Component {
                     label: 'Data de criação',
                     type: pageType.WHEN,
                     getDisplay: value => {
+                        if(typeof value === 'object') {
+                            if(value.end.diff(value.start) === 0) {
+                                return Promise.resolve(value.start.format('L'));
+                            }
+                            return Promise.resolve(`${value.start.format('L')} - ${value.end.format('L')}`);    
+                        }
+
+                        switch(value) {
+                            case dateType.today: return Promise.resolve('Hoje');
+                            case dateType.yesterday: return Promise.resolve('Ontem');
+                            case dateType.last7days: return Promise.resolve('Últimos 7 dias');
+                            case dateType.last30days: return Promise.resolve('Últimos 30 dias');
+                            case dateType.lastWeek: return Promise.resolve('Última semana');
+                            case dateType.lastMonth: return Promise.resolve('Último mês');
+                            case dateType.lastYear: return Promise.resolve('Último ano');
+                            case dateType.thisWeek: return Promise.resolve('Esta semana');
+                            case dateType.thisMonth: return Promise.resolve('Este mês');
+                            case dateType.thisYear: return Promise.resolve('Este ano');
+                            
+
+                        }
+
                         return Promise.resolve(value);
                     },
                     config: {

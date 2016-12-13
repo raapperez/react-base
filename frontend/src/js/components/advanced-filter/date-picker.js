@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component, PropTypes } from 'react';
-import DateRangePicker from 'react-daterange-picker';
+import DateRangePicker from '../date-range-picker';
 
 const stateDefinitions = {
     available: {
@@ -48,6 +48,7 @@ class DatePicker extends Component {
         return (
             <div className="date-picker">
                 <DateRangePicker
+                    locale={'pt-br'}
                     firstOfWeek={1}
                     numberOfCalendars={1}
                     selectionType='range'
@@ -62,8 +63,8 @@ class DatePicker extends Component {
 
 
                 {value ?
-                    (isOne ? (<div className="display"><span>{value && value.start.format('ll')}</span></div>)
-                        : (<div className="display"><span>{value && value.start.format('ll')}</span> <span> - </span> <span>{value && value.end.format('ll')}</span></div>)
+                    (isOne ? (<div className="display"><span>{value && value.start.format('L')}</span></div>)
+                        : (<div className="display"><span>{value && value.start.format('L')}</span> <span> - </span> <span>{value && value.end.format('L')}</span></div>)
                     )
                     : null
                 }
@@ -76,7 +77,7 @@ class DatePicker extends Component {
 }
 
 DatePicker.propTypes = {
-    value: PropTypes.object,
+    value: PropTypes.any,
     onChange: PropTypes.func
 };
 

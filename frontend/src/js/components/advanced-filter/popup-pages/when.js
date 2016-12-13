@@ -37,6 +37,14 @@ class When extends Component {
         );
     }
 
+    renderDatePicker(data) {
+        const {input, ...rest} = data;
+
+        return (
+            <DatePicker {...input} {...rest} />
+        );
+    }
+
     renderRelativeForm() {
         const {name, btnText, onSubmit, handleSubmit, pristine, submitting} = this.props;
         
@@ -53,10 +61,19 @@ class When extends Component {
     }
 
     renderStaticForm() {
+        const {name, btnText, onSubmit, handleSubmit, pristine, submitting} = this.props;
+        
         return (
-            <div>
-                <DatePicker />
-            </div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                
+                <div className="picker-wrapper">
+                    <Field name={name} component={this.renderDatePicker} />
+                </div>
+
+                <div>
+                    <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnText}</button>
+                </div>
+            </form>
         );
     }
 
@@ -98,8 +115,7 @@ class When extends Component {
 When.propTypes = {
     title: PropTypes.string,
     onBack: PropTypes.func,
-    label: PropTypes.string,
-    input: PropTypes.object.isRequired,
+    label: PropTypes.string,    
     name: PropTypes.string.isRequired,
     btnText: PropTypes.string,
     onSubmit: PropTypes.func,

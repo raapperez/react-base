@@ -97,7 +97,7 @@ class RelativeDate extends Component {
 }
 
 RelativeDate.propTypes = {
-    value: PropTypes.string,
+    value: PropTypes.any,
     onChange: PropTypes.func
 };
 
