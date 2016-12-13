@@ -210,7 +210,7 @@ class Page2Page extends Component {
                         if (array.length === 1) {
 
                             return getCategoriesOptions().then(categories => {
-                                return categories.find(category => category.value.toString() === array[0]).label.toString();
+                                return categories.find(category => category.value === array[0]).label.toString();
                             });
 
                         }
@@ -234,7 +234,7 @@ class Page2Page extends Component {
                         if (array.length === 1) {
 
                             return getNeighborhoodsOptions().then(status => {
-                                return status.find(status => status.value.toString() === array[0]).label.toString();
+                                return status.find(status => status.value === array[0]).label.toString();
                             });
 
                         }
@@ -271,7 +271,7 @@ class Page2Page extends Component {
                         if (array.length === 1) {
 
                             return getStatusOptions().then(status => {
-                                return status.find(status => status.value.toString() === array[0]).label.toString();
+                                return status.find(status => status.value === array[0]).label.toString();
                             });
 
                         }
