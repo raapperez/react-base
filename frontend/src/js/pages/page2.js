@@ -2,6 +2,7 @@
 
 import React, { Component, PropTypes } from 'react';
 import AdvancedFilter, { pageType } from '../components/advanced-filter';
+import _ from 'lodash';
 
 function getCategoriesOptions() {
     return new Promise((resolve) => {
@@ -142,6 +143,19 @@ function getNeighborhoodsOptions() {
 
 }
 
+function getCommentsOptions() {
+    return Promise.resolve([
+        {
+            label: 'Somente lidos',
+            value: false
+        },
+        {
+            label: 'Somente novos',
+            value: true
+        }
+    ]);
+}
+
 class Page2Page extends Component {
 
     constructor(props) {
@@ -259,7 +273,21 @@ class Page2Page extends Component {
                     }
                 },
                 {
-                    label: 'Comentários'
+                    key: 'hasNewComments',
+                    label: 'Comentários',
+                    type: pageType.RADIO,
+                    getDisplay: value => {
+                        return getCommentsOptions().then(data => {                            
+                            return data.find(d => d.value === value).label;
+                        });
+                    },
+                    config: {
+                        title: 'Comentários',
+                        name: 'hasNewComments',
+                        getOptions: getCommentsOptions,
+                        btnText: 'Adicionar filtro',
+                        parseResult: result => (_.isString(result) && result === 'true') || (_.isBoolean(result) && result) 
+                    }
                 }
             ]
         };

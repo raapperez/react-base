@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import Main from './popup-pages/main';
 import Text from './popup-pages/text';
 import Multi from './popup-pages/multi';
+import Radio from './popup-pages/radio';
 
 import * as pageType from './popup-pages/page-type';
 
@@ -120,6 +121,13 @@ class Popup extends Component {
         return <Multi {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} />;
     }
 
+    renderRadio() {
+        const {selectedItem} = this.state;
+
+        return <Radio {... selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} />;
+    }
+
+
     renderSelectedItem() {
 
         const {selectedItem} = this.state;
@@ -134,6 +142,9 @@ class Popup extends Component {
             }
             case pageType.MULTI: {
                 return this.renderMulti();
+            }
+            case pageType.RADIO: {
+                return this.renderRadio();
             }
         }
 
