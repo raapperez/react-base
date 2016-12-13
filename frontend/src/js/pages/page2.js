@@ -95,6 +95,53 @@ function getStatusOptions() {
 
 }
 
+function getNeighborhoodsOptions() {
+    return new Promise((resolve) => {
+        //setTimeout(() => {
+        resolve([
+            {
+                value: 0,
+                label: 'Moema'
+            },
+            {
+                value: 1,
+                label: 'Vila Olímpia'
+            },
+            {
+                value: 2,
+                label: 'Butantã'
+            },
+            {
+                value: 3,
+                label: 'Tatuapé'
+            },
+            {
+                value: 4,
+                label: 'Saúde'
+            },
+            {
+                value: 5,
+                label: 'Vila Sônia'
+            },
+            {
+                value: 6,
+                label: 'Mooca'
+            },
+            {
+                value: 7,
+                label: 'Itaim'
+            },
+            {
+                value: 8,
+                label: 'Vila Madalena'
+            }
+
+        ]);
+        // }, 500);
+    });
+
+}
+
 class Page2Page extends Component {
 
     constructor(props) {
@@ -165,7 +212,26 @@ class Page2Page extends Component {
                     }
                 },
                 {
-                    label: 'Bairros'
+                    key: 'neighborhoods',
+                    label: 'Bairros',
+                    type: pageType.MULTI,
+                    getDisplay: array => {
+                        if (array.length === 1) {
+
+                            return getNeighborhoodsOptions().then(status => {
+                                return status.find(status => status.value.toString() === array[0]).label.toString();
+                            });
+
+                        }
+
+                        return Promise.resolve(`${array.length} selecionados`);
+                    },
+                    config: {
+                        title: 'Bairros',
+                        name: 'neighborhoods',
+                        getOptions: getNeighborhoodsOptions,
+                        btnText: 'Adicionar filtro'
+                    }
                 },
                 {
                     label: 'Data de criação'
