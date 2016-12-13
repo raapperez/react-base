@@ -42,6 +42,8 @@ class RelativeDate extends Component {
 
         return (
             <div>
+                <div className='panel-title'>&nbsp;</div>
+
                 <div className='panel'>
                     <div className='item half'>
                         {this.renderRadioBtn(dateType.today, 'Hoje')}
