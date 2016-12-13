@@ -21,13 +21,20 @@ class Multi extends Component {
     }
 
     submit(form) {
-        const {onSubmit, name} = this.props;
+        const {onSubmit, name, parseResult} = this.props;
 
         const values = [];
 
         _.forEach(form[name], (value, key) => {
             if (value) {
-                values.push(key.replace(/^\_/, ''));
+                const newKey = key.replace(/^\_/, '');
+
+                if(parseResult) {
+                    values.push(parseResult(newKey));
+                } else {
+                    values.push(newKey);
+                }
+                
             }
         });
 
@@ -92,6 +99,7 @@ Multi.propTypes = {
     name: PropTypes.string.isRequired,
     getOptions: PropTypes.func.isRequired,
     btnText: PropTypes.string,
+    parseResult: PropTypes.func,
     onSubmit: PropTypes.func,
     handleSubmit: PropTypes.func,
     pristine: PropTypes.bool,

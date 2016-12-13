@@ -221,7 +221,8 @@ class Page2Page extends Component {
                         title: 'Categorias',
                         name: 'categories',
                         getOptions: getCategoriesOptions,
-                        btnText: 'Adicionar filtro'
+                        btnText: 'Adicionar filtro',
+                        parseResult: parseInt
 
                     }
                 },
@@ -244,7 +245,8 @@ class Page2Page extends Component {
                         title: 'Bairros',
                         name: 'neighborhoods',
                         getOptions: getNeighborhoodsOptions,
-                        btnText: 'Adicionar filtro'
+                        btnText: 'Adicionar filtro',
+                        parseResult: parseInt
                     }
                 },
                 {
@@ -269,7 +271,8 @@ class Page2Page extends Component {
                         title: 'Situação',
                         name: 'status',
                         getOptions: getStatusOptions,
-                        btnText: 'Adicionar filtro'
+                        btnText: 'Adicionar filtro',
+                        parseResult: parseInt
                     }
                 },
                 {
