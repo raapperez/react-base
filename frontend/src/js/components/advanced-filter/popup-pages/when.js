@@ -11,14 +11,22 @@ class When extends Component {
         super(props);
     }
 
+    renderRelativeDate(data) {
+        const {input, ...rest} = data;
+
+        return (
+            <RelativeDates {...input} {...rest} />
+        );
+    }
+
     render() {
 
-        const {title, onBack, label, input, btnText, onSubmit, handleSubmit, pristine, submitting} = this.props;
+        const {title, onBack, name, label, input, btnText, onSubmit, handleSubmit, pristine, submitting} = this.props;
 
         return layout(title, onBack, (
             <form className="when-page" onSubmit={handleSubmit(onSubmit)}>
                 
-                <RelativeDates />
+                <Field name={name} component={this.renderRelativeDate} />
 
                 <div>
                     <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnText}</button>
@@ -34,6 +42,7 @@ When.propTypes = {
     onBack: PropTypes.func,
     label: PropTypes.string,
     input: PropTypes.object.isRequired,
+    name: PropTypes.string.isRequired,
     btnText: PropTypes.string,
     onSubmit: PropTypes.func,
     handleSubmit: PropTypes.func,
