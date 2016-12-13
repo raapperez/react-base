@@ -6,57 +6,91 @@ import AdvancedFilter, { pageType } from '../components/advanced-filter';
 function getCategoriesOptions() {
     return new Promise((resolve) => {
         //setTimeout(() => {
-            resolve([
-                {
-                    value: 5,
-                    label: 'Poda/retirada de árvore'
-                },
-                {
-                    value: 7,
-                    label: 'Estacionamento irregular'
-                },
-                {
-                    value: 8,
-                    label: 'Ocupação irregular de área pública'
-                },
-                {
-                    value: 11,
-                    label: 'Calçada irregular'
-                },
-                {
-                    value: 13,
-                    label: 'Estabelecimento sem nota fiscal'
-                },
-                {
-                    value: 2,
-                    label: 'Iluminação pública irregular'
-                },
-                {
-                    value: 17,
-                    label: 'Falta de rampa de acessibilidade'
-                },
-                {
-                    value: 1,
-                    label: 'Semáforo quebrado'
-                },
-                {
-                    value: 3,
-                    label: 'Buraco nas vias'
-                },
-                {
-                    value: 4,
-                    label: 'Foco de dengue'
-                },
-                {
-                    value: 6,
-                    label: 'Bueiro entupido'
-                },
-                {
-                    value: 9,
-                    label: 'Entulho na calçada/via pública'
-                }
-            ]);
-       // }, 500);
+        resolve([
+            {
+                value: 5,
+                label: 'Poda/retirada de árvore'
+            },
+            {
+                value: 7,
+                label: 'Estacionamento irregular'
+            },
+            {
+                value: 8,
+                label: 'Ocupação irregular de área pública'
+            },
+            {
+                value: 11,
+                label: 'Calçada irregular'
+            },
+            {
+                value: 13,
+                label: 'Estabelecimento sem nota fiscal'
+            },
+            {
+                value: 2,
+                label: 'Iluminação pública irregular'
+            },
+            {
+                value: 17,
+                label: 'Falta de rampa de acessibilidade'
+            },
+            {
+                value: 1,
+                label: 'Semáforo quebrado'
+            },
+            {
+                value: 3,
+                label: 'Buraco nas vias'
+            },
+            {
+                value: 4,
+                label: 'Foco de dengue'
+            },
+            {
+                value: 6,
+                label: 'Bueiro entupido'
+            },
+            {
+                value: 9,
+                label: 'Entulho na calçada/via pública'
+            }
+        ]);
+        // }, 500);
+    });
+
+}
+
+function getStatusOptions() {
+    return new Promise((resolve) => {
+        //setTimeout(() => {
+        resolve([
+            {
+                value: 0,
+                label: 'Aberto'
+            },
+            {
+                value: 1,
+                label: 'Atendido'
+            },
+            {
+                value: 2,
+                label: 'Atendimento'
+            },
+            {
+                value: 3,
+                label: 'Fechado'
+            },
+            {
+                value: 4,
+                label: 'Novo'
+            },
+            {
+                value: 5,
+                label: 'Recusado'
+            }
+        ]);
+        // }, 500);
     });
 
 }
@@ -137,7 +171,26 @@ class Page2Page extends Component {
                     label: 'Data de criação'
                 },
                 {
-                    label: 'Situação'
+                    key: 'status',
+                    label: 'Situação',
+                    type: pageType.MULTI,
+                    getDisplay: array => {
+                        if (array.length === 1) {
+
+                            return getStatusOptions().then(status => {
+                                return status.find(status => status.value.toString() === array[0]).label.toString();
+                            });
+
+                        }
+
+                        return Promise.resolve(`${array.length} selecionados`);
+                    },
+                    config: {
+                        title: 'Situação',
+                        name: 'status',
+                        getOptions: getStatusOptions,
+                        btnText: 'Adicionar filtro'
+                    }
                 },
                 {
                     label: 'Comentários'
