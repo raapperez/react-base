@@ -53,7 +53,7 @@ class AdvancedFilter extends Component {
         }, () => {
             onChange(this.state.value);
         });
-        
+
     }
 
     render() {
@@ -65,8 +65,9 @@ class AdvancedFilter extends Component {
             <div className="advanced-filter">
                 <Box config={config} filters={value} onRemoveFilter={this.removeFilter} />
                 <div className="right">
-                    <a onClick={this.togglePopup}>+</a>
-                    <Popup ref="popup" config={config} onAddFilter={this.addFilter} />
+                    <Popup ref="popup" config={config} onAddFilter={this.addFilter}>
+                        <a onClick={this.togglePopup}>+</a>
+                    </Popup>
                 </div>
             </div>
         );

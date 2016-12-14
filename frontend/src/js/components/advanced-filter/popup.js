@@ -8,6 +8,7 @@ import Text from './popup-pages/text';
 import Multi from './popup-pages/multi';
 import Radio from './popup-pages/radio';
 import When from './popup-pages/when';
+import Popover from 'react-popover-fork';
 
 import * as pageType from './popup-pages/page-type';
 
@@ -43,13 +44,9 @@ class Popup extends Component {
     }
 
     open() {
-        const {popup} = this.refs;
-
         this.setState({
             isActive: true,
             selectedItem: null
-        }, () => {
-            popup.focus();
         });
 
     }
@@ -162,24 +159,19 @@ class Popup extends Component {
     }
 
     render() {
-
+        const {children} = this.props;
         const {isActive} = this.state;
 
         return (
-            <div className={classNames('popup', { active: isActive })} ref="popup">
-
-                <div className="close" onClick={this.close}></div>
-
-                <div className="top-triangle"></div>
-
-                {this.renderSelectedItem()}
-
-            </div>
+            <Popover isOpen={isActive} preferPlace="below" onOuterAction={this.close} body={<div className="advanced-filter-popup">{this.renderSelectedItem()}</div>} >
+                {children}
+            </Popover>
         );
     }
 }
 
 Popup.propTypes = {
+    children: PropTypes.object,
     config: PropTypes.object.isRequired,
     onAddFilter: PropTypes.func.isRequired
 };
