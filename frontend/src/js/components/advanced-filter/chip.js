@@ -1,6 +1,7 @@
 'use strict';
 
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
+import classNames from 'classnames';
 
 class Chip extends Component {
 
@@ -8,19 +9,24 @@ class Chip extends Component {
         super(props);
 
         this.remove = this.remove.bind(this);
+        this.getId = this.getId.bind(this);
+    }
+
+    getId() {
+        return this.props.id;
     }
 
     remove() {
-        const {onRemove} = this.props;
-        onRemove();
+        const {onRemove, id} = this.props;
+        onRemove(id);
     }
 
     render() {
 
-        const {label, value} = this.props;
+        const {label, value, id, isSelected, onClick} = this.props;
 
         return (
-            <div className='chip'>
+            <div className={classNames('chip', { selected: isSelected })} onClick={e => { e.preventDefault(); onClick(id); } }>
                 <div className='left'>
                     <label>{label}</label>
                     <span>{value}</span>
@@ -34,9 +40,12 @@ class Chip extends Component {
 }
 
 Chip.propTypes = {
+    id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
-    onRemove: PropTypes.func.isRequired
+    onRemove: PropTypes.func.isRequired,
+    isSelected: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired
 };
 
 export default Chip;

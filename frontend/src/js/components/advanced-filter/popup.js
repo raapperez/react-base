@@ -54,6 +54,12 @@ class Popup extends Component {
     close() {
         this.setState({
             isActive: false
+        }, () => {
+            const {onClose} = this.props;
+
+            if(onClose) {
+                onClose();
+            }
         });
     }
 
@@ -173,7 +179,8 @@ class Popup extends Component {
 Popup.propTypes = {
     children: PropTypes.object,
     config: PropTypes.object.isRequired,
-    onAddFilter: PropTypes.func.isRequired
+    onAddFilter: PropTypes.func.isRequired,
+    onClose: PropTypes.func
 };
 
 export default Popup;

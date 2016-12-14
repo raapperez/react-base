@@ -10,7 +10,12 @@ class Box extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            selectedFilter: null
+        };
+
         this.removeFilter = this.removeFilter.bind(this);
+        this.clickFilter = this.clickFilter.bind(this);
     }
 
     removeFilter(key) {
@@ -18,9 +23,16 @@ class Box extends Component {
         onRemoveFilter(key);
     }
 
+    clickFilter(key) {
+        this.setState({
+            selectedFilter: key
+        });
+    }
+
     render() {
 
         const {config, filters} = this.props;
+        const {selectedFilter} = this.state;
 
         return (
             <div className='box'>
@@ -34,9 +46,9 @@ class Box extends Component {
 
                     return (
                         <Async key={key} promise={item.getDisplay(value)} then={(val) => (
-                            <Chip label={item.label} value={val} onRemove={() => this.removeFilter(key)} />
+                            <Chip id={key} label={item.label} value={val} onClick={this.clickFilter} onRemove={this.removeFilter} isSelected={key === selectedFilter} />
                         )} pendingRender={(
-                            <Chip label={item.label} value="..." onRemove={() => this.removeFilter(key)} />
+                            <Chip id={key} label={item.label} value="..." onClick={this.clickFilter} onRemove={this.removeFilter} isSelected={key === selectedFilter}/>
                         )} />
                     );
                 }
