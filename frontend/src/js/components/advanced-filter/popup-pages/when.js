@@ -88,10 +88,10 @@ class When extends Component {
 
     render() {
 
-        const {title, onBack} = this.props;
+        const {title, onBack, isEdit} = this.props;
         const {page} = this.state;
 
-        return layout(title, onBack, (
+        return layout(title, !isEdit && onBack, (
 
             <div className="when-page">
 
@@ -113,6 +113,7 @@ class When extends Component {
 }
 
 When.propTypes = {
+    isEdit: PropTypes.bool,
     title: PropTypes.string,
     onBack: PropTypes.func,
     label: PropTypes.string,    

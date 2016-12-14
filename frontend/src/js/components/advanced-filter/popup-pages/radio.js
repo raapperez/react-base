@@ -33,10 +33,10 @@ class Radio extends Component {
 
     render() {
 
-        const {title, name, onBack, btnText, handleSubmit, pristine, submitting, getOptions} = this.props;
+        const {title, name, onBack, isEdit, btnText, handleSubmit, pristine, submitting, getOptions} = this.props;
 
 
-        return layout(title, onBack, (
+        return layout(title, !isEdit && onBack, (
             <div className="radio-page">
 
                 <form onSubmit={handleSubmit(this.submit)}>
@@ -68,6 +68,7 @@ class Radio extends Component {
 }
 
 Radio.propTypes = {
+    isEdit: PropTypes.bool,
     title: PropTypes.string,
     onBack: PropTypes.func,
     name: PropTypes.string.isRequired,

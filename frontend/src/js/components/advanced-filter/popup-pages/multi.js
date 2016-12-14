@@ -55,12 +55,12 @@ class Multi extends Component {
 
     render() {
 
-        const {title, name, onBack, btnText, handleSubmit, pristine, submitting, getOptions} = this.props;
+        const {title, name, onBack, isEdit, btnText, handleSubmit, pristine, submitting, getOptions} = this.props;
         const {filter} = this.state;
 
         const adjustedFilter = latinize(filter.toLowerCase());
 
-        return layout(title, onBack, (
+        return layout(title, !isEdit && onBack, (
             <div className="multi-page">
 
                 <input className="filter-field" type="text" placeholder="Filtrar..." value={filter} onChange={this.setFilter} />
@@ -94,6 +94,7 @@ class Multi extends Component {
 }
 
 Multi.propTypes = {
+    isEdit: PropTypes.bool,
     title: PropTypes.string,
     onBack: PropTypes.func,
     name: PropTypes.string.isRequired,

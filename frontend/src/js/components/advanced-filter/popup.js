@@ -19,7 +19,7 @@ class Popup extends Component {
 
         this.state = {
             isActive: false,
-            selectedItem: null
+            selectedItem: props.config.items.find(item => item.key === props.selectedItemKey) || null
         };
 
         this.getIsActive = this.getIsActive.bind(this);
@@ -44,6 +44,16 @@ class Popup extends Component {
     }
 
     open() {
+
+        const {selectedItemKey} = this.props;
+
+        if (selectedItemKey) {
+            this.setState({
+                isActive: true
+            });
+            return;
+        }
+
         this.setState({
             isActive: true,
             selectedItem: null
@@ -57,7 +67,7 @@ class Popup extends Component {
         }, () => {
             const {onClose} = this.props;
 
-            if(onClose) {
+            if (onClose) {
                 onClose();
             }
         });
@@ -114,27 +124,33 @@ class Popup extends Component {
 
     renderText() {
         const {selectedItem} = this.state;
+        const {selectedItemKey} = this.props;
 
-        return <Text {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} />;
+        return <Text {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} />;
 
     }
 
     renderMulti() {
         const {selectedItem} = this.state;
+        const {selectedItemKey} = this.props;
 
-        return <Multi {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} />;
+        return <Multi {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} />;
     }
 
     renderRadio() {
         const {selectedItem} = this.state;
+        const {selectedItemKey} = this.props;
 
-        return <Radio {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} />;
+
+        return <Radio {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} />;
     }
 
     renderWhen() {
         const {selectedItem} = this.state;
+        const {selectedItemKey} = this.props;
 
-        return <When {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} />;
+
+        return <When {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} />;
     }
 
 
@@ -177,6 +193,7 @@ class Popup extends Component {
 }
 
 Popup.propTypes = {
+    selectedItemKey: PropTypes.string,
     children: PropTypes.object,
     config: PropTypes.object.isRequired,
     onAddFilter: PropTypes.func.isRequired,

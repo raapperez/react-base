@@ -12,9 +12,9 @@ class Text extends Component {
 
     render() {
 
-        const {title, onBack, label, input, btnText, onSubmit, handleSubmit, pristine, submitting} = this.props;
+        const {title, onBack, isEdit, label, input, btnText, onSubmit, handleSubmit, pristine, submitting} = this.props;
 
-        return layout(title, onBack, (
+        return layout(title, !isEdit && onBack, (
             <form className="text-page" onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     {label ?
@@ -33,6 +33,7 @@ class Text extends Component {
 }
 
 Text.propTypes = {
+    isEdit: PropTypes.bool,
     title: PropTypes.string,
     onBack: PropTypes.func,
     label: PropTypes.string,

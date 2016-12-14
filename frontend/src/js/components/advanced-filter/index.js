@@ -63,7 +63,7 @@ class AdvancedFilter extends Component {
 
         return (
             <div className="advanced-filter">
-                <Box config={config} filters={value} onRemoveFilter={this.removeFilter} />
+                <Box config={config} filters={value} onRemoveFilter={this.removeFilter} onAddFilter={this.addFilter} />
                 <div className="right">
                     <Popup ref="popup" config={config} onAddFilter={this.addFilter}>
                         <a onClick={this.togglePopup}>+</a>

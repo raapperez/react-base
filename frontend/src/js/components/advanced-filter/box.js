@@ -31,7 +31,7 @@ class Box extends Component {
 
     render() {
 
-        const {config, filters} = this.props;
+        const {config, filters, onAddFilter} = this.props;
         const {selectedFilter} = this.state;
 
         return (
@@ -40,15 +40,15 @@ class Box extends Component {
                 {_.map(filters, (value, key) => {
                     const item = config.items.find(item => item.key === key);
 
-                    if(!item) {
+                    if (!item) {
                         throw `Missing config key ${key}`;
                     }
 
                     return (
                         <Async key={key} promise={item.getDisplay(value)} then={(val) => (
-                            <Chip id={key} label={item.label} value={val} onClick={this.clickFilter} onRemove={this.removeFilter} isSelected={key === selectedFilter} />
+                            <Chip id={key} label={item.label} value={val} onClick={this.clickFilter} onRemove={this.removeFilter} isSelected={key === selectedFilter} config={config} onAddFilter={onAddFilter} />
                         )} pendingRender={(
-                            <Chip id={key} label={item.label} value="..." onClick={this.clickFilter} onRemove={this.removeFilter} isSelected={key === selectedFilter}/>
+                            <Chip id={key} label={item.label} value="..." onClick={this.clickFilter} onRemove={this.removeFilter} isSelected={key === selectedFilter} config={config} onAddFilter={onAddFilter} />
                         )} />
                     );
                 }
@@ -61,6 +61,7 @@ class Box extends Component {
 Box.propTypes = {
     config: PropTypes.object.isRequired,
     filters: PropTypes.object.isRequired,
+    onAddFilter: PropTypes.func.isRequired,
     onRemoveFilter: PropTypes.func.isRequired
 };
 
