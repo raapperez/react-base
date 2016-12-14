@@ -23,6 +23,8 @@ class Multi extends Component {
     submit(form) {
         const {onSubmit, name, parseResult} = this.props;
 
+        console.log('to', form);
+
         const values = [];
 
         _.forEach(form[name], (value, key) => {
@@ -55,10 +57,12 @@ class Multi extends Component {
 
     render() {
 
-        const {title, name, onBack, isEdit, btnText, handleSubmit, pristine, submitting, getOptions} = this.props;
+        const {title, name, onBack, isEdit, btnText, handleSubmit, pristine, submitting, getOptions, initialValues} = this.props;
         const {filter} = this.state;
 
         const adjustedFilter = latinize(filter.toLowerCase());
+
+        console.log('from', initialValues);
 
         return layout(title, !isEdit && onBack, (
             <div className="multi-page">
@@ -70,7 +74,7 @@ class Multi extends Component {
                         <Async promise={getOptions()} then={(options) => (
                             <div>
                             {_.sortBy(options, (option => latinize(option.label.toLowerCase()))).filter(option => latinize(option.label.toLowerCase()).indexOf(adjustedFilter) !== -1).map(option => (
-                                <label key={option.value}><Field type="checkbox" component="input" name={`${name}._${option.value}`} />{option.label}</label>
+                                <label key={option.value}><Field type="checkbox" component="input" name={`_${option.value}`} />{option.label}</label>
                             ))}
                             </div>
                         )} pendingRender={(
@@ -108,5 +112,6 @@ Multi.propTypes = {
 };
 
 export default reduxForm({
-    form: 'advanced-filter/popup/multi'
+    form: 'advanced-filter/popup/multi',
+ //   enableReinitialize: true
 })(Multi);

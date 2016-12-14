@@ -9,6 +9,7 @@ import Multi from './popup-pages/multi';
 import Radio from './popup-pages/radio';
 import When from './popup-pages/when';
 import Popover from 'react-popover-fork';
+import _ from 'lodash';
 
 import * as pageType from './popup-pages/page-type';
 
@@ -132,9 +133,13 @@ class Popup extends Component {
 
     renderMulti() {
         const {selectedItem} = this.state;
-        const {selectedItemKey} = this.props;
+        const {selectedItemKey, initialValues} = this.props;
 
-        return <Multi {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} />;
+        const parsedInitialValues = {};
+
+        _.forEach(initialValues[selectedItemKey], v => parsedInitialValues[`_${v}`] = true);
+
+        return <Multi {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} initialValues={parsedInitialValues}/>;
     }
 
     renderRadio() {
