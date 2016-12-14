@@ -46,9 +46,9 @@ class Box extends Component {
 
                     return (
                         <Async key={key} promise={item.getDisplay(value)} then={(val) => (
-                            <Chip id={key} label={item.label} value={val} onClick={this.clickFilter} onRemove={this.removeFilter} isSelected={key === selectedFilter} config={config} onAddFilter={onAddFilter} />
+                            <Chip id={key} value={value} label={item.label} display={val} onClick={this.clickFilter} onRemove={this.removeFilter} isSelected={key === selectedFilter} config={config} onAddFilter={onAddFilter} />
                         )} pendingRender={(
-                            <Chip id={key} label={item.label} value="..." onClick={this.clickFilter} onRemove={this.removeFilter} isSelected={key === selectedFilter} config={config} onAddFilter={onAddFilter} />
+                            <Chip id={key} value={value} label={item.label} display="..." onClick={this.clickFilter} onRemove={this.removeFilter} isSelected={key === selectedFilter} config={config} onAddFilter={onAddFilter} />
                         )} />
                     );
                 }

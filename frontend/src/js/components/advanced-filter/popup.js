@@ -124,9 +124,9 @@ class Popup extends Component {
 
     renderText() {
         const {selectedItem} = this.state;
-        const {selectedItemKey} = this.props;
+        const {selectedItemKey, initialValues} = this.props;
 
-        return <Text {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} />;
+        return <Text {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} initialValues={initialValues} />;
 
     }
 
@@ -194,6 +194,7 @@ class Popup extends Component {
 
 Popup.propTypes = {
     selectedItemKey: PropTypes.string,
+    initialValues: PropTypes.object,
     children: PropTypes.object,
     config: PropTypes.object.isRequired,
     onAddFilter: PropTypes.func.isRequired,
