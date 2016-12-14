@@ -168,11 +168,11 @@ class Page2Page extends Component {
         this.state = {
             value: {
                 anyField: 'buraco',
-                // categories: [0, 4, 5, 6, 7],
-                // neighborhoods: [0,2, 4, 5],
-                // createdAt: 'lastWeek',
-                // status: [0,2,3],
-                // isNew: true
+                categories: [0, 4, 5, 9, 7],
+                neighborhoods: [0],
+                when: {'start':'2016-12-06T02:00:00.000Z','end':'2016-12-22T02:00:00.000Z'},
+                status: [0,2,3],
+                hasNewComments: true
             }
         };
 
@@ -259,10 +259,12 @@ class Page2Page extends Component {
                     type: pageType.WHEN,
                     getDisplay: value => {
                         if(typeof value === 'object') {
-                            if(value.end.diff(value.start) === 0) {
-                                return Promise.resolve(value.start.format('L'));
+                            const start = moment(value.start);
+                            const end = moment(value.end);
+                            if(end.diff(start) === 0) {
+                                return Promise.resolve(start.format('L'));
                             }
-                            return Promise.resolve(`${value.start.format('L')} - ${value.end.format('L')}`);    
+                            return Promise.resolve(`${start.format('L')} - ${end.format('L')}`);    
                         }
 
                         switch(value) {

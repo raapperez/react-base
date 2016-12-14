@@ -27,6 +27,11 @@ class Box extends Component {
 
                 {_.map(filters, (value, key) => {
                     const item = config.items.find(item => item.key === key);
+
+                    if(!item) {
+                        throw `Missing config key ${key}`;
+                    }
+
                     return (
                         <Async key={key} promise={item.getDisplay(value)} then={(val) => (
                             <Chip label={item.label} value={val} onRemove={() => this.removeFilter(key)} />
