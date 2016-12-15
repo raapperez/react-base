@@ -33,7 +33,7 @@ class Radio extends Component {
 
     render() {
 
-        const {title, name, onBack, isEdit, btnText, handleSubmit, pristine, submitting, getOptions, initialValues} = this.props;
+        const {title, name, onBack, isEdit, btnText, handleSubmit, pristine, submitting, getOptions} = this.props;
 
 
         return layout(title, !isEdit && onBack, (

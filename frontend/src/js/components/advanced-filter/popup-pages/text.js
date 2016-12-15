@@ -21,7 +21,7 @@ class Text extends Component {
                         (<label>{label}</label>)
                         : null
                     }
-                    <Field type="text" {...input} component="input" />
+                    <Field autoFocus type="text" {...input} component="input" />
                 </div>
                 <div>
                     <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnText}</button>

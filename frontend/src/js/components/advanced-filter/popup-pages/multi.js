@@ -56,7 +56,7 @@ class Multi extends Component {
 
     render() {
 
-        const {title, onBack, isEdit, btnText, handleSubmit, pristine, submitting, getOptions, initialValues} = this.props;
+        const {title, onBack, isEdit, btnText, handleSubmit, pristine, submitting, getOptions} = this.props;
         const {filter} = this.state;
 
         const adjustedFilter = latinize(filter.toLowerCase());
@@ -65,7 +65,7 @@ class Multi extends Component {
         return layout(title, !isEdit && onBack, (
             <div className="multi-page">
 
-                <input className="filter-field" type="text" placeholder="Filtrar..." value={filter} onChange={this.setFilter} />
+                <input autoFocus className="filter-field" type="text" placeholder="Filtrar..." value={filter} onChange={this.setFilter} />
 
                 <form onSubmit={handleSubmit(this.submit)}>
                     <div className="options-box">
