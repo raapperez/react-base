@@ -29,6 +29,12 @@ class Box extends Component {
         });
     }
 
+    resetSelection() {
+        this.setState({
+            selectedFilter: null
+        });
+    }
+
     render() {
 
         const {config, filters, onAddFilter} = this.props;

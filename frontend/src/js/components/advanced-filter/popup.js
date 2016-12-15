@@ -115,12 +115,10 @@ class Popup extends Component {
     }
 
     renderMain() {
-        const {config} = this.props;
-
+        const {config, disableKeys} = this.props;
         const {items} = config;
 
-        return <Main items={items} onSelect={this.selectItem} />;
-
+        return <Main items={items} onSelect={this.selectItem} disableKeys={disableKeys} />;
     }
 
     renderText() {
@@ -235,7 +233,8 @@ Popup.propTypes = {
     children: PropTypes.object,
     config: PropTypes.object.isRequired,
     onAddFilter: PropTypes.func.isRequired,
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
+    disableKeys: PropTypes.array
 };
 
 export default Popup;

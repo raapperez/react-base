@@ -29,8 +29,10 @@ class AdvancedFilter extends Component {
     }
 
     togglePopup() {
-        const {popup} = this.refs;
+        const {box, popup} = this.refs;
         popup.toggle();
+
+        box.resetSelection();
     }
 
     addFilter(form) {
@@ -63,9 +65,9 @@ class AdvancedFilter extends Component {
 
         return (
             <div className="advanced-filter">
-                <Box config={config} filters={value} onRemoveFilter={this.removeFilter} onAddFilter={this.addFilter} />
+                <Box ref="box" config={config} filters={value} onRemoveFilter={this.removeFilter} onAddFilter={this.addFilter} />
                 <div className="right">
-                    <Popup ref="popup" config={config} onAddFilter={this.addFilter}>
+                    <Popup ref="popup" config={config} onAddFilter={this.addFilter} disableKeys={_.keys(value)}>
                         <a onClick={this.togglePopup}>+</a>
                     </Popup>
                 </div>

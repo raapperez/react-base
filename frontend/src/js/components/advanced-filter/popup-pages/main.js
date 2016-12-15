@@ -3,6 +3,8 @@
 import React, { Component, PropTypes } from 'react';
 
 import layout from './layout';
+import classNames from 'classnames';
+import _ from 'lodash';
 
 
 class Main extends Component {
@@ -27,7 +29,7 @@ class Main extends Component {
     }
 
     render() {
-        const {items} = this.props;
+        const {items, disableKeys} = this.props;
 
         return layout(null, null, (
             <div className="main-popup-page">
@@ -35,7 +37,7 @@ class Main extends Component {
                     {
                         items.map(item => (
                             <li key={Math.random()}>
-                                <a onClick={e => { e.preventDefault(); this.select(item); } }>{item.label}</a>
+                                <a className={classNames({disabled: disableKeys && _.includes(disableKeys || [], item.key)})} onClick={e => { e.preventDefault(); this.select(item); } }>{item.label}</a>
                             </li>
                         ))
                     }
@@ -48,6 +50,7 @@ class Main extends Component {
 
 Main.propTypes = {
     items: PropTypes.array.isRequired,
+    disableKeys: PropTypes.array,
     onSelect: PropTypes.func.isRequired
 };
 

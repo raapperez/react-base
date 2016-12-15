@@ -171,7 +171,7 @@ class Page2Page extends Component {
                 categories: [0, 4, 5, 9, 7],
                 neighborhoods: [0],
                 when: moment.range('2016-12-06T02:00:00.000Z', '2016-12-22T02:00:00.000Z'),
-                status: [0,2,3],
+                status: [0, 2, 3],
                 hasNewComments: true
             }
         };
@@ -258,16 +258,16 @@ class Page2Page extends Component {
                     label: 'Data de criação',
                     type: pageType.WHEN,
                     getDisplay: value => {
-                        if(typeof value === 'object') {
+                        if (typeof value === 'object') {
                             const start = moment(value.start);
                             const end = moment(value.end);
-                            if(end.diff(start) === 0) {
+                            if (end.diff(start) === 0) {
                                 return Promise.resolve(start.format('L'));
                             }
-                            return Promise.resolve(`${start.format('L')} - ${end.format('L')}`);    
+                            return Promise.resolve(`${start.format('L')} - ${end.format('L')}`);
                         }
 
-                        switch(value) {
+                        switch (value) {
                             case dateType.today: return Promise.resolve('Hoje');
                             case dateType.yesterday: return Promise.resolve('Ontem');
                             case dateType.last7days: return Promise.resolve('Últimos 7 dias');
@@ -278,7 +278,7 @@ class Page2Page extends Component {
                             case dateType.thisWeek: return Promise.resolve('Esta semana');
                             case dateType.thisMonth: return Promise.resolve('Este mês');
                             case dateType.thisYear: return Promise.resolve('Este ano');
-                            
+
 
                         }
 
@@ -287,43 +287,6 @@ class Page2Page extends Component {
                     config: {
                         title: 'Data de criação',
                         name: 'when',
-                        btnText: 'Adicionar filtro'
-                    }
-                },
-                {
-                    key: 'when2',
-                    label: 'Data de criação',
-                    type: pageType.WHEN,
-                    getDisplay: value => {
-                        if(typeof value === 'object') {
-                            const start = moment(value.start);
-                            const end = moment(value.end);
-                            if(end.diff(start) === 0) {
-                                return Promise.resolve(start.format('L'));
-                            }
-                            return Promise.resolve(`${start.format('L')} - ${end.format('L')}`);    
-                        }
-
-                        switch(value) {
-                            case dateType.today: return Promise.resolve('Hoje');
-                            case dateType.yesterday: return Promise.resolve('Ontem');
-                            case dateType.last7days: return Promise.resolve('Últimos 7 dias');
-                            case dateType.last30days: return Promise.resolve('Últimos 30 dias');
-                            case dateType.lastWeek: return Promise.resolve('Última semana');
-                            case dateType.lastMonth: return Promise.resolve('Último mês');
-                            case dateType.lastYear: return Promise.resolve('Último ano');
-                            case dateType.thisWeek: return Promise.resolve('Esta semana');
-                            case dateType.thisMonth: return Promise.resolve('Este mês');
-                            case dateType.thisYear: return Promise.resolve('Este ano');
-                            
-
-                        }
-
-                        return Promise.resolve(value);
-                    },
-                    config: {
-                        title: 'Data de criação',
-                        name: 'when2',
                         btnText: 'Adicionar filtro'
                     }
                 },
@@ -346,7 +309,8 @@ class Page2Page extends Component {
                         title: 'Situação',
                         name: 'status',
                         getOptions: getStatusOptions,
-                        btnText: 'Adicionar filtro'
+                        btnText: 'Adicionar filtro',
+                        parseResult: parseInt
                     }
                 },
                 {
@@ -354,7 +318,7 @@ class Page2Page extends Component {
                     label: 'Comentários',
                     type: pageType.RADIO,
                     getDisplay: value => {
-                        return getCommentsOptions().then(data => {                            
+                        return getCommentsOptions().then(data => {
                             return data.find(d => d.value === value).label;
                         });
                     },
@@ -363,7 +327,7 @@ class Page2Page extends Component {
                         name: 'hasNewComments',
                         getOptions: getCommentsOptions,
                         btnText: 'Adicionar filtro',
-                        parseResult: result => (_.isString(result) && result === 'true') || (_.isBoolean(result) && result) 
+                        parseResult: result => (_.isString(result) && result === 'true') || (_.isBoolean(result) && result)
                     }
                 }
             ]
