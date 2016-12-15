@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export default (title, onBack, content) => (
+export default (title, onBack, backBtn, content) => (
     <div className="popup-page">
         {title ?
             (<div className="header">
@@ -10,7 +10,7 @@ export default (title, onBack, content) => (
                     (<a className="back-btn" onClick={e => {
                         e.preventDefault();
                         onBack();
-                    } }>back</a>)
+                    } }>{backBtn}</a>)
                     : null
                 }
 

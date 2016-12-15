@@ -56,13 +56,13 @@ class Multi extends Component {
 
     render() {
 
-        const {title, onBack, isEdit, btnText, handleSubmit, pristine, submitting, getOptions} = this.props;
+        const {title, onBack, backBtn, isEdit, textBtn, handleSubmit, pristine, submitting, getOptions} = this.props;
         const {filter} = this.state;
 
         const adjustedFilter = latinize(filter.toLowerCase());
-        const btnTextValue = btnText[isEdit ? 'isEdit' : 'default'];
+        const textBtnValue = textBtn[isEdit ? 'isEdit' : 'default'];
 
-        return layout(title, !isEdit && onBack, (
+        return layout(title, !isEdit && onBack, backBtn, (
             <div className="multi-page">
 
                 <input autoFocus className="filter-field" type="text" placeholder="Filtrar..." value={filter} onChange={this.setFilter} />
@@ -82,7 +82,7 @@ class Multi extends Component {
 
                     </div>
                     <div>
-                        <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnTextValue}</button>
+                        <button className="submit-btn" type="submit" disabled={pristine || submitting}>{textBtnValue}</button>
                     </div>
                 </form>
 
@@ -98,9 +98,10 @@ Multi.propTypes = {
     isEdit: PropTypes.bool,
     title: PropTypes.string,
     onBack: PropTypes.func,
+    backBtn: PropTypes.object,
     name: PropTypes.string.isRequired,
     getOptions: PropTypes.func.isRequired,
-    btnText: PropTypes.object,
+    textBtn: PropTypes.object,
     parseResult: PropTypes.func,
     onSubmit: PropTypes.func,
     handleSubmit: PropTypes.func,

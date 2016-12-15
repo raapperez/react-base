@@ -8,10 +8,14 @@ import AdvancedFilter, { pageType, dateType } from '../components/advanced-filte
 import _ from 'lodash';
 
 
-const btnText = {
+const textBtn = {
     default: 'Adicionar filtro',
     isEdit: 'Editar filtro'
 };
+
+const backBtn = (
+    <span>{'<'}</span>
+);
 
 
 function getCategoriesOptions() {
@@ -203,12 +207,13 @@ class Page2Page extends Component {
                     config: {
                         title: 'Qualquer campo',
                         label: 'Contém',
+                        backBtn,
                         input: {
                             placeholder: 'Escreva o texto desejado',
                             name: 'anyField',
                             required: 'required'
                         },
-                        btnText
+                        textBtn
                     }
                 },
                 {
@@ -230,8 +235,9 @@ class Page2Page extends Component {
                     config: {
                         title: 'Categorias',
                         name: 'categories',
+                        backBtn,
                         getOptions: getCategoriesOptions,
-                        btnText,
+                        textBtn,
                         parseResult: parseInt
 
                     }
@@ -254,8 +260,9 @@ class Page2Page extends Component {
                     config: {
                         title: 'Bairros',
                         name: 'neighborhoods',
+                        backBtn,
                         getOptions: getNeighborhoodsOptions,
-                        btnText,
+                        textBtn,
                         parseResult: parseInt
                     }
                 },
@@ -293,7 +300,8 @@ class Page2Page extends Component {
                     config: {
                         title: 'Data de criação',
                         name: 'when',
-                        btnText
+                        backBtn,
+                        textBtn
                     }
                 },
                 {
@@ -314,8 +322,9 @@ class Page2Page extends Component {
                     config: {
                         title: 'Situação',
                         name: 'status',
+                        backBtn,
                         getOptions: getStatusOptions,
-                        btnText,
+                        textBtn,
                         parseResult: parseInt
                     }
                 },
@@ -331,8 +340,9 @@ class Page2Page extends Component {
                     config: {
                         title: 'Comentários',
                         name: 'hasNewComments',
+                        backBtn,
                         getOptions: getCommentsOptions,
-                        btnText,
+                        textBtn,
                         parseResult: result => (_.isString(result) && result === 'true') || (_.isBoolean(result) && result)
                     }
                 }

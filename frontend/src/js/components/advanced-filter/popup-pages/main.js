@@ -31,7 +31,7 @@ class Main extends Component {
     render() {
         const {items, disableKeys} = this.props;
 
-        return layout(null, null, (
+        return layout(null, null, null, (
             <div className="main-popup-page">
                 <ul>
                     {

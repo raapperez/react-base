@@ -50,8 +50,8 @@ class When extends Component {
     }
 
     renderRelativeForm() {
-        const {name, btnText, isEdit, onSubmit, handleSubmit, pristine, submitting} = this.props;
-        const btnTextValue = btnText[isEdit ? 'isEdit' : 'default'];
+        const {name, textBtn, isEdit, onSubmit, handleSubmit, pristine, submitting} = this.props;
+        const textBtnValue = textBtn[isEdit ? 'isEdit' : 'default'];
 
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -59,15 +59,15 @@ class When extends Component {
                 <Field name={name} component={this.renderRelativeDate} />
 
                 <div>
-                    <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnTextValue}</button>
+                    <button className="submit-btn" type="submit" disabled={pristine || submitting}>{textBtnValue}</button>
                 </div>
             </form>
         );
     }
 
     renderStaticForm() {
-        const {name, btnText, isEdit, onSubmit, handleSubmit, pristine, submitting} = this.props;
-        const btnTextValue = btnText[isEdit ? 'isEdit' : 'default'];
+        const {name, textBtn, isEdit, onSubmit, handleSubmit, pristine, submitting} = this.props;
+        const textBtnValue = textBtn[isEdit ? 'isEdit' : 'default'];
 
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -77,7 +77,7 @@ class When extends Component {
                 </div>
 
                 <div>
-                    <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnTextValue}</button>
+                    <button className="submit-btn" type="submit" disabled={pristine || submitting}>{textBtnValue}</button>
                 </div>
             </form>
         );
@@ -94,10 +94,10 @@ class When extends Component {
 
     render() {
 
-        const {title, onBack, isEdit} = this.props;
+        const {title, onBack, backBtn, isEdit} = this.props;
         const {page} = this.state;
 
-        return layout(title, !isEdit && onBack, (
+        return layout(title, !isEdit && onBack, backBtn, (
 
             <div className="when-page">
 
@@ -122,9 +122,10 @@ When.propTypes = {
     isEdit: PropTypes.bool,
     title: PropTypes.string,
     onBack: PropTypes.func,
+    backBtn: PropTypes.object,
     label: PropTypes.string,
     name: PropTypes.string.isRequired,
-    btnText: PropTypes.object,
+    textBtn: PropTypes.object,
     onSubmit: PropTypes.func,
     handleSubmit: PropTypes.func,
     pristine: PropTypes.bool,
