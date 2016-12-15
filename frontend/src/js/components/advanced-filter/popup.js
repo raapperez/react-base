@@ -1,8 +1,6 @@
 'use strict';
 
 import React, { Component, PropTypes } from 'react';
-import classNames from 'classnames';
-
 import Main from './popup-pages/main';
 import Text from './popup-pages/text';
 import Multi from './popup-pages/multi';
@@ -162,14 +160,13 @@ class Popup extends Component {
         const {selectedItem} = this.state;
         const {selectedItemKey, initialValues} = this.props;
 
-        if (!_pages[selectedItem.key]) {
-            _pages[selectedItem.key] = Radio(selectedItem.key);
-        }
-
         const parsedInitialValues = selectedItemKey ? {
             [selectedItem.key]: initialValues[selectedItem.key].toString()
         } : null;
 
+        if (!_pages[selectedItem.key]) {
+            _pages[selectedItem.key] = Radio(selectedItem.key);
+        }
 
         const Radiox = _pages[selectedItem.key];
 
@@ -178,10 +175,19 @@ class Popup extends Component {
 
     renderWhen() {
         const {selectedItem} = this.state;
-        const {selectedItemKey} = this.props;
+        const {selectedItemKey, initialValues} = this.props;
 
+        const parsedInitialValues = selectedItemKey ? {
+            [selectedItem.key]: initialValues[selectedItem.key]
+        } : null;
 
-        return <When {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} />;
+        if (!_pages[selectedItem.key]) {
+            _pages[selectedItem.key] = When(selectedItem.key);
+        }
+
+        const Whenx = _pages[selectedItem.key];
+
+        return <Whenx {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} initialValues={parsedInitialValues} />;
     }
 
 

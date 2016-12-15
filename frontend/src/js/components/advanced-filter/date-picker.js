@@ -17,9 +17,8 @@ class DatePicker extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
-            value: null,
+            value: props.value || null,
             states: null
         };
 
@@ -42,8 +41,13 @@ class DatePicker extends Component {
     render() {
         const {value} = this.state;
 
-        const isOne = value && value.end.diff(value.start) === 0;
+        let theValue = value;
 
+        if(typeof theValue !== 'object') {
+            theValue = null;
+        }
+
+        const isOne = theValue && theValue.end.diff(theValue.start) === 0;
 
         return (
             <div className="date-picker">
@@ -57,12 +61,12 @@ class DatePicker extends Component {
                     dateStates={dateRanges}
                     defaultState="available"
                     showLegend={false}
-                    value={value}
+                    value={theValue}
                     onSelect={this.handleSelect}
                     />
 
 
-                {value ?
+                {theValue ?
                     (isOne ? (<div className="display"><span>{value && value.start.format('L')}</span></div>)
                         : (<div className="display"><span>{value && value.start.format('L')}</span> <span> - </span> <span>{value && value.end.format('L')}</span></div>)
                     )

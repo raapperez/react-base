@@ -12,8 +12,12 @@ class When extends Component {
     constructor(props) {
         super(props);
 
+        const {initialValues, name} = props;
+
+        const value = initialValues ? initialValues[name] : null;
+
         this.state = {
-            page: 'relative'
+            page: typeof value === 'string' || !value ? 'relative' : 'static'
         };
 
         this.goToPage = this.goToPage.bind(this);
@@ -47,10 +51,10 @@ class When extends Component {
 
     renderRelativeForm() {
         const {name, btnText, onSubmit, handleSubmit, pristine, submitting} = this.props;
-        
+
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
-                
+
                 <Field name={name} component={this.renderRelativeDate} />
 
                 <div>
@@ -62,10 +66,10 @@ class When extends Component {
 
     renderStaticForm() {
         const {name, btnText, onSubmit, handleSubmit, pristine, submitting} = this.props;
-        
+
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
-                
+
                 <div className="picker-wrapper">
                     <Field name={name} component={this.renderDatePicker} />
                 </div>
@@ -80,7 +84,7 @@ class When extends Component {
     renderPage() {
         const {page} = this.state;
 
-        switch(page) {
+        switch (page) {
             case 'relative': return this.renderRelativeForm();
             case 'static': return this.renderStaticForm();
         }
@@ -96,8 +100,8 @@ class When extends Component {
             <div className="when-page">
 
                 <nav className="menu">
-                    <a className={classNames('btn', {active: page === 'relative'})} onClick={e => {e.preventDefault(); this.goToPage('relative');}}>Relativa</a>
-                    <a className={classNames('btn', {active: page === 'static'})} onClick={e => {e.preventDefault(); this.goToPage('static');}}>Específica</a>
+                    <a className={classNames('btn', { active: page === 'relative' })} onClick={e => { e.preventDefault(); this.goToPage('relative'); } }>Relativa</a>
+                    <a className={classNames('btn', { active: page === 'static' })} onClick={e => { e.preventDefault(); this.goToPage('static'); } }>Específica</a>
                 </nav>
 
                 {
@@ -106,7 +110,7 @@ class When extends Component {
 
             </div>
 
-            
+
         ));
 
     }
@@ -116,15 +120,16 @@ When.propTypes = {
     isEdit: PropTypes.bool,
     title: PropTypes.string,
     onBack: PropTypes.func,
-    label: PropTypes.string,    
+    label: PropTypes.string,
     name: PropTypes.string.isRequired,
     btnText: PropTypes.string,
     onSubmit: PropTypes.func,
     handleSubmit: PropTypes.func,
     pristine: PropTypes.bool,
-    submitting: PropTypes.bool
+    submitting: PropTypes.bool,
+    initialValues: PropTypes.object
 };
 
-export default reduxForm({
-    form: 'advanced-filter/popup/when'
+export default key => reduxForm({
+    form: `advanced-filter/popup/when/${key}`
 })(When);
