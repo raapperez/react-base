@@ -24,8 +24,6 @@ class Multi extends Component {
     submit(form) {
         const {onSubmit, name, parseResult} = this.props;
 
-        console.log('to', form);
-
         const values = [];
 
         _.forEach(form, (value, key) => {
@@ -40,8 +38,6 @@ class Multi extends Component {
 
             }
         });
-
-        console.log(values);
 
         if (!values.length) {
             return Promise.reject(new SubmissionError({ _error: 'Must select at least one' }));
@@ -60,12 +56,11 @@ class Multi extends Component {
 
     render() {
 
-        const {title, name, onBack, isEdit, btnText, handleSubmit, pristine, submitting, getOptions, initialValues} = this.props;
+        const {title, onBack, isEdit, btnText, handleSubmit, pristine, submitting, getOptions, initialValues} = this.props;
         const {filter} = this.state;
 
         const adjustedFilter = latinize(filter.toLowerCase());
 
-        console.log('from', initialValues);
 
         return layout(title, !isEdit && onBack, (
             <div className="multi-page">

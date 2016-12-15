@@ -21,7 +21,7 @@ class Radio extends Component {
     submit(form) {
         const {onSubmit, name, parseResult} = this.props;
 
-        if(parseResult) {
+        if (parseResult) {
             onSubmit({
                 [name]: parseResult(form[name])
             });
@@ -33,7 +33,7 @@ class Radio extends Component {
 
     render() {
 
-        const {title, name, onBack, isEdit, btnText, handleSubmit, pristine, submitting, getOptions} = this.props;
+        const {title, name, onBack, isEdit, btnText, handleSubmit, pristine, submitting, getOptions, initialValues} = this.props;
 
 
         return layout(title, !isEdit && onBack, (
@@ -43,9 +43,9 @@ class Radio extends Component {
                     <div className="options-box">
                         <Async promise={getOptions()} then={(options) => (
                             <div>
-                            {_.sortBy(options, (option => latinize(option.label.toLowerCase()))).map(option => (
-                                <label key={option.value}><Field type="radio" component="input" name={name} value={option.value.toString()} />{option.label}</label>
-                            ))}
+                                {_.sortBy(options, (option => latinize(option.label.toLowerCase()))).map(option => (
+                                    <label key={option.value}><Field type="radio" component="input" name={name} value={option.value.toString()} />{option.label}</label>
+                                ))}
                             </div>
                         )} pendingRender={(
                             <span>Carregando...</span>
@@ -81,6 +81,6 @@ Radio.propTypes = {
     submitting: PropTypes.bool
 };
 
-export default reduxForm({
-    form: 'advanced-filter/popup/radio'
+export default key => reduxForm({
+    form: `advanced-filter/popup/radio/${key}`
 })(Radio);

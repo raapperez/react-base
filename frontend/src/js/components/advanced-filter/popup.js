@@ -129,7 +129,7 @@ class Popup extends Component {
         const {selectedItem} = this.state;
         const {selectedItemKey, initialValues} = this.props;
 
-        if(!_pages[selectedItem.key]) {
+        if (!_pages[selectedItem.key]) {
             _pages[selectedItem.key] = Text(selectedItem.key);
         }
 
@@ -149,7 +149,7 @@ class Popup extends Component {
             _.forEach(initialValues[selectedItemKey], v => parsedInitialValues[`_${v}`] = true);
         }
 
-        if(!_pages[selectedItem.key]) {
+        if (!_pages[selectedItem.key]) {
             _pages[selectedItem.key] = Multi(selectedItem.key);
         }
 
@@ -160,10 +160,20 @@ class Popup extends Component {
 
     renderRadio() {
         const {selectedItem} = this.state;
-        const {selectedItemKey} = this.props;
+        const {selectedItemKey, initialValues} = this.props;
+
+        if (!_pages[selectedItem.key]) {
+            _pages[selectedItem.key] = Radio(selectedItem.key);
+        }
+
+        const parsedInitialValues = selectedItemKey ? {
+            [selectedItem.key]: initialValues[selectedItem.key].toString()
+        } : null;
 
 
-        return <Radio {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} />;
+        const Radiox = _pages[selectedItem.key];
+
+        return <Radiox {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} initialValues={parsedInitialValues} />;
     }
 
     renderWhen() {

@@ -43,7 +43,7 @@ class Chip extends Component {
         const {label, display, isSelected, config, id, onAddFilter, value} = this.props;
 
         return (
-            <Popup ref="popup" config={config} onAddFilter={onAddFilter} selectedItemKey={id} initialValues={{[id]:value}}>
+            <Popup ref="popup" config={config} onAddFilter={onAddFilter} selectedItemKey={id} initialValues={{ [id]: value }}>
                 <div className={classNames('chip', { selected: isSelected })} onClick={this.click} >
                     <div className='left'>
                         <label>{label}</label>
@@ -63,7 +63,7 @@ Chip.propTypes = {
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.any.isRequired,
-    display: PropTypes.string.isRequired, 
+    display: PropTypes.string.isRequired,
     onRemove: PropTypes.func.isRequired,
     isSelected: PropTypes.bool.isRequired,
     onClick: PropTypes.func.isRequired,
