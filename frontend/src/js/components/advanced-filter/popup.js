@@ -13,6 +13,9 @@ import _ from 'lodash';
 
 import * as pageType from './popup-pages/page-type';
 
+const _pages = {};
+
+
 class Popup extends Component {
 
     constructor(props) {
@@ -45,7 +48,6 @@ class Popup extends Component {
     }
 
     open() {
-
         const {selectedItemKey} = this.props;
 
         if (selectedItemKey) {
@@ -127,7 +129,13 @@ class Popup extends Component {
         const {selectedItem} = this.state;
         const {selectedItemKey, initialValues} = this.props;
 
-        return <Text {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} initialValues={initialValues} />;
+        if(!_pages[selectedItem.key]) {
+            _pages[selectedItem.key] = Text(selectedItem.key);
+        }
+
+        const Textx = _pages[selectedItem.key];
+
+        return <Textx {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} initialValues={initialValues} />;
 
     }
 
@@ -137,9 +145,17 @@ class Popup extends Component {
 
         const parsedInitialValues = {};
 
-        _.forEach(initialValues[selectedItemKey], v => parsedInitialValues[`_${v}`] = true);
+        if (selectedItemKey) {
+            _.forEach(initialValues[selectedItemKey], v => parsedInitialValues[`_${v}`] = true);
+        }
 
-        return <Multi {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} initialValues={parsedInitialValues}/>;
+        if(!_pages[selectedItem.key]) {
+            _pages[selectedItem.key] = Multi(selectedItem.key);
+        }
+
+        const Multix = _pages[selectedItem.key];
+
+        return <Multix {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} initialValues={parsedInitialValues} />;
     }
 
     renderRadio() {

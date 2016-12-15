@@ -20,6 +20,7 @@ class Multi extends Component {
         this.submit = this.submit.bind(this);
     }
 
+
     submit(form) {
         const {onSubmit, name, parseResult} = this.props;
 
@@ -27,26 +28,28 @@ class Multi extends Component {
 
         const values = [];
 
-        _.forEach(form[name], (value, key) => {
+        _.forEach(form, (value, key) => {
             if (value) {
                 const newKey = key.replace(/^\_/, '');
 
-                if(parseResult) {
+                if (parseResult) {
                     values.push(parseResult(newKey));
                 } else {
                     values.push(newKey);
                 }
-                
+
             }
         });
+
+        console.log(values);
 
         if (!values.length) {
             return Promise.reject(new SubmissionError({ _error: 'Must select at least one' }));
         }
 
-        form[name] = values;
-
-        onSubmit(form);
+        onSubmit({
+            [name]: values
+        });
     }
 
     setFilter(filter) {
@@ -71,17 +74,16 @@ class Multi extends Component {
 
                 <form onSubmit={handleSubmit(this.submit)}>
                     <div className="options-box">
+
                         <Async promise={getOptions()} then={(options) => (
                             <div>
-                            {_.sortBy(options, (option => latinize(option.label.toLowerCase()))).filter(option => latinize(option.label.toLowerCase()).indexOf(adjustedFilter) !== -1).map(option => (
-                                <label key={option.value}><Field type="checkbox" component="input" name={`_${option.value}`} />{option.label}</label>
-                            ))}
+                                {_.sortBy(options, (option => latinize(option.label.toLowerCase()))).filter(option => latinize(option.label.toLowerCase()).indexOf(adjustedFilter) !== -1).map(option => (
+                                    <label key={option.value}><Field type="checkbox" component="input" name={`_${option.value}`} />{option.label}</label>
+                                ))}
                             </div>
                         )} pendingRender={(
                             <span>Carregando...</span>
                         )} />
-
-
 
                     </div>
                     <div>
@@ -111,7 +113,6 @@ Multi.propTypes = {
     submitting: PropTypes.bool
 };
 
-export default reduxForm({
-    form: 'advanced-filter/popup/multi',
- //   enableReinitialize: true
+export default key => reduxForm({
+    form: `advanced-filter/popup/multi/${key}`
 })(Multi);

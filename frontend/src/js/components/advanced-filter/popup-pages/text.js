@@ -45,6 +45,6 @@ Text.propTypes = {
     submitting: PropTypes.bool
 };
 
-export default reduxForm({
-    form: 'advanced-filter/popup/text'
+export default key => reduxForm({
+    form: `advanced-filter/popup/text/${key}`
 })(Text);
