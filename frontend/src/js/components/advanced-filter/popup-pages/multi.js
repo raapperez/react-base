@@ -60,7 +60,7 @@ class Multi extends Component {
         const {filter} = this.state;
 
         const adjustedFilter = latinize(filter.toLowerCase());
-
+        const btnTextValue = btnText[isEdit ? 'isEdit' : 'default'];
 
         return layout(title, !isEdit && onBack, (
             <div className="multi-page">
@@ -82,7 +82,7 @@ class Multi extends Component {
 
                     </div>
                     <div>
-                        <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnText}</button>
+                        <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnTextValue}</button>
                     </div>
                 </form>
 
@@ -100,7 +100,7 @@ Multi.propTypes = {
     onBack: PropTypes.func,
     name: PropTypes.string.isRequired,
     getOptions: PropTypes.func.isRequired,
-    btnText: PropTypes.string,
+    btnText: PropTypes.object,
     parseResult: PropTypes.func,
     onSubmit: PropTypes.func,
     handleSubmit: PropTypes.func,

@@ -8,6 +8,12 @@ import AdvancedFilter, { pageType, dateType } from '../components/advanced-filte
 import _ from 'lodash';
 
 
+const btnText = {
+    default: 'Adicionar filtro',
+    isEdit: 'Editar filtro'
+};
+
+
 function getCategoriesOptions() {
     return new Promise((resolve) => {
         //setTimeout(() => {
@@ -202,7 +208,7 @@ class Page2Page extends Component {
                             name: 'anyField',
                             required: 'required'
                         },
-                        btnText: 'Adicionar filtro'
+                        btnText
                     }
                 },
                 {
@@ -225,7 +231,7 @@ class Page2Page extends Component {
                         title: 'Categorias',
                         name: 'categories',
                         getOptions: getCategoriesOptions,
-                        btnText: 'Adicionar filtro',
+                        btnText,
                         parseResult: parseInt
 
                     }
@@ -249,7 +255,7 @@ class Page2Page extends Component {
                         title: 'Bairros',
                         name: 'neighborhoods',
                         getOptions: getNeighborhoodsOptions,
-                        btnText: 'Adicionar filtro',
+                        btnText,
                         parseResult: parseInt
                     }
                 },
@@ -287,7 +293,7 @@ class Page2Page extends Component {
                     config: {
                         title: 'Data de criação',
                         name: 'when',
-                        btnText: 'Adicionar filtro'
+                        btnText
                     }
                 },
                 {
@@ -309,7 +315,7 @@ class Page2Page extends Component {
                         title: 'Situação',
                         name: 'status',
                         getOptions: getStatusOptions,
-                        btnText: 'Adicionar filtro',
+                        btnText,
                         parseResult: parseInt
                     }
                 },
@@ -326,7 +332,7 @@ class Page2Page extends Component {
                         title: 'Comentários',
                         name: 'hasNewComments',
                         getOptions: getCommentsOptions,
-                        btnText: 'Adicionar filtro',
+                        btnText,
                         parseResult: result => (_.isString(result) && result === 'true') || (_.isBoolean(result) && result)
                     }
                 }

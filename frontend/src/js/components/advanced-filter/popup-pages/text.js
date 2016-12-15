@@ -14,6 +14,8 @@ class Text extends Component {
 
         const {title, onBack, isEdit, label, input, btnText, onSubmit, handleSubmit, pristine, submitting} = this.props;
 
+        const btnTextValue = btnText[isEdit ? 'isEdit' : 'default'];
+
         return layout(title, !isEdit && onBack, (
             <form className="text-page" onSubmit={handleSubmit(onSubmit)}>
                 <div>
@@ -24,7 +26,7 @@ class Text extends Component {
                     <Field autoFocus type="text" {...input} component="input" />
                 </div>
                 <div>
-                    <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnText}</button>
+                    <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnTextValue}</button>
                 </div>
             </form>
         ));
@@ -38,7 +40,7 @@ Text.propTypes = {
     onBack: PropTypes.func,
     label: PropTypes.string,
     input: PropTypes.object.isRequired,
-    btnText: PropTypes.string,
+    btnText: PropTypes.object,
     onSubmit: PropTypes.func,
     handleSubmit: PropTypes.func,
     pristine: PropTypes.bool,

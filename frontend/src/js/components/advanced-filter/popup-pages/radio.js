@@ -34,7 +34,7 @@ class Radio extends Component {
     render() {
 
         const {title, name, onBack, isEdit, btnText, handleSubmit, pristine, submitting, getOptions} = this.props;
-
+        const btnTextValue = btnText[isEdit ? 'isEdit' : 'default'];
 
         return layout(title, !isEdit && onBack, (
             <div className="radio-page">
@@ -55,7 +55,7 @@ class Radio extends Component {
 
                     </div>
                     <div>
-                        <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnText}</button>
+                        <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnTextValue}</button>
                     </div>
                 </form>
 
@@ -73,7 +73,7 @@ Radio.propTypes = {
     onBack: PropTypes.func,
     name: PropTypes.string.isRequired,
     getOptions: PropTypes.func.isRequired,
-    btnText: PropTypes.string,
+    btnText: PropTypes.object,
     parseResult: PropTypes.func,
     onSubmit: PropTypes.func,
     handleSubmit: PropTypes.func,

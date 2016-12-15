@@ -50,7 +50,8 @@ class When extends Component {
     }
 
     renderRelativeForm() {
-        const {name, btnText, onSubmit, handleSubmit, pristine, submitting} = this.props;
+        const {name, btnText, isEdit, onSubmit, handleSubmit, pristine, submitting} = this.props;
+        const btnTextValue = btnText[isEdit ? 'isEdit' : 'default'];
 
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,14 +59,15 @@ class When extends Component {
                 <Field name={name} component={this.renderRelativeDate} />
 
                 <div>
-                    <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnText}</button>
+                    <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnTextValue}</button>
                 </div>
             </form>
         );
     }
 
     renderStaticForm() {
-        const {name, btnText, onSubmit, handleSubmit, pristine, submitting} = this.props;
+        const {name, btnText, isEdit, onSubmit, handleSubmit, pristine, submitting} = this.props;
+        const btnTextValue = btnText[isEdit ? 'isEdit' : 'default'];
 
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -75,7 +77,7 @@ class When extends Component {
                 </div>
 
                 <div>
-                    <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnText}</button>
+                    <button className="submit-btn" type="submit" disabled={pristine || submitting}>{btnTextValue}</button>
                 </div>
             </form>
         );
@@ -122,7 +124,7 @@ When.propTypes = {
     onBack: PropTypes.func,
     label: PropTypes.string,
     name: PropTypes.string.isRequired,
-    btnText: PropTypes.string,
+    btnText: PropTypes.object,
     onSubmit: PropTypes.func,
     handleSubmit: PropTypes.func,
     pristine: PropTypes.bool,
