@@ -301,7 +301,18 @@ class Page2Page extends Component {
                         title: 'Data de criação',
                         name: 'when',
                         backBtn,
-                        textBtn
+                        textBtn,
+                        relativeDateTexts: {
+                            today: 'Hoje',
+                            yesterday: 'Ontem',
+                            last7days: 'Últimos 7 dias',
+                            last30days: 'Últimos 30 dias',
+                            last: 'Último(a)',
+                            this: 'Este(a)',
+                            week: 'Semana',
+                            month: 'Mês',
+                            year: 'Ano'
+                        }
                     }
                 },
                 {

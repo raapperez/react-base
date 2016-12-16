@@ -50,13 +50,13 @@ class When extends Component {
     }
 
     renderRelativeForm() {
-        const {name, textBtn, isEdit, onSubmit, handleSubmit, pristine, submitting} = this.props;
+        const {name, textBtn, isEdit, onSubmit, handleSubmit, pristine, submitting, relativeDateTexts} = this.props;
         const textBtnValue = textBtn[isEdit ? 'isEdit' : 'default'];
 
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
 
-                <Field name={name} component={this.renderRelativeDate} />
+                <Field name={name} texts={relativeDateTexts} component={this.renderRelativeDate} />
 
                 <div>
                     <button className="submit-btn" type="submit" disabled={pristine || submitting}>{textBtnValue}</button>
@@ -130,7 +130,8 @@ When.propTypes = {
     handleSubmit: PropTypes.func,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
-    initialValues: PropTypes.object
+    initialValues: PropTypes.object,
+    relativeDateTexts: PropTypes.object
 };
 
 export default key => reduxForm({
