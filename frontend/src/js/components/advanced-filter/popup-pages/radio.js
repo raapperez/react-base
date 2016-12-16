@@ -16,6 +16,7 @@ class Radio extends Component {
         };
 
         this.submit = this.submit.bind(this);
+        this.renderOptions = this.renderOptions.bind(this);
     }
 
     submit(form) {
@@ -31,9 +32,26 @@ class Radio extends Component {
         onSubmit(form);
     }
 
+    renderOptions(options) {
+
+        const {name} = this.props;
+        const headOption = _.head(options);
+
+        return (
+            <div>
+                {_.sortBy(options, (option => latinize(option.label.toLowerCase()))).map(option => (
+                    <label key={option.value}>
+                        <Field type="radio" {...(headOption === option) ? { autoFocus: true } : {}} component="input" name={name} value={option.value.toString()} />
+                        {option.label}
+                    </label>
+                ))}
+            </div>
+        );
+    }
+
     render() {
 
-        const {title, name, onBack, backBtn, isEdit, textBtn, handleSubmit, pristine, submitting, getOptions} = this.props;
+        const {title, onBack, backBtn, isEdit, textBtn, handleSubmit, pristine, submitting, getOptions} = this.props;
         const textBtnValue = textBtn[isEdit ? 'isEdit' : 'default'];
 
         return layout(title, !isEdit && onBack, backBtn, (
@@ -41,17 +59,11 @@ class Radio extends Component {
 
                 <form onSubmit={handleSubmit(this.submit)}>
                     <div className="options-box">
-                        <Async promise={getOptions()} then={(options) => (
-                            <div>
-                                {_.sortBy(options, (option => latinize(option.label.toLowerCase()))).map(option => (
-                                    <label key={option.value}><Field type="radio" component="input" name={name} value={option.value.toString()} />{option.label}</label>
-                                ))}
-                            </div>
-                        )} pendingRender={(
-                            <span>Carregando...</span>
-                        )} />
-
-
+                        <Async promise={getOptions()}
+                            then={this.renderOptions}
+                            pendingRender={(
+                                <span>Carregando...</span>
+                            )} />
 
                     </div>
                     <div>
@@ -71,7 +83,7 @@ Radio.propTypes = {
     isEdit: PropTypes.bool,
     title: PropTypes.string,
     onBack: PropTypes.func,
-    backBtn: PropTypes.object,    
+    backBtn: PropTypes.object,
     name: PropTypes.string.isRequired,
     getOptions: PropTypes.func.isRequired,
     textBtn: PropTypes.object,
