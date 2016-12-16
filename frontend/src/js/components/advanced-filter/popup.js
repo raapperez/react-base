@@ -142,7 +142,7 @@ class Popup extends Component {
         const parsedInitialValues = {};
 
         if (selectedItemKey) {
-            _.forEach(initialValues[selectedItemKey], v => parsedInitialValues[`_${v}`] = true);
+            _.forEach(initialValues[selectedItemKey], v => parsedInitialValues[v] = true);
         }
 
         if (!_pages[selectedItem.key]) {

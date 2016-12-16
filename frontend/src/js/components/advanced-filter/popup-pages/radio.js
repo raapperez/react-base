@@ -35,13 +35,13 @@ class Radio extends Component {
     renderOptions(options) {
 
         const {name} = this.props;
-        const headOption = _.head(options);
+        //const headOption = _.head(options);
 
         return (
             <div>
                 {_.sortBy(options, (option => latinize(option.label.toLowerCase()))).map(option => (
                     <label key={option.value}>
-                        <Field type="radio" {...(headOption === option) ? { autoFocus: true } : {}} component="input" name={name} value={option.value.toString()} />
+                        <Field type="radio" component="input" name={name} value={option.value.toString()} />
                         {option.label}
                     </label>
                 ))}

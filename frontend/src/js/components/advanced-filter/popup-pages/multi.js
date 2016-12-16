@@ -28,12 +28,10 @@ class Multi extends Component {
 
         _.forEach(form, (value, key) => {
             if (value) {
-                const newKey = key.replace(/^\_/, '');
-
                 if (parseResult) {
-                    values.push(parseResult(newKey));
+                    values.push(parseResult(key));
                 } else {
-                    values.push(newKey);
+                    values.push(key);
                 }
 
             }
@@ -56,11 +54,13 @@ class Multi extends Component {
 
     render() {
 
-        const {title, onBack, backBtn, isEdit, textBtn, handleSubmit, pristine, submitting, getOptions} = this.props;
+        const {title, onBack, backBtn, isEdit, textBtn, handleSubmit, pristine, submitting, getOptions, initialValues} = this.props;
         const {filter} = this.state;
 
         const adjustedFilter = latinize(filter.toLowerCase());
         const textBtnValue = textBtn[isEdit ? 'isEdit' : 'default'];
+
+        console.log(initialValues);
 
         return layout(title, !isEdit && onBack, backBtn, (
             <div className="multi-page">
@@ -73,7 +73,7 @@ class Multi extends Component {
                         <Async promise={getOptions()} then={(options) => (
                             <div>
                                 {_.sortBy(options, (option => latinize(option.label.toLowerCase()))).filter(option => latinize(option.label.toLowerCase()).indexOf(adjustedFilter) !== -1).map(option => (
-                                    <label key={option.value}><Field type="checkbox" component="input" name={`_${option.value}`} />{option.label}</label>
+                                    <label key={option.value}><Field type="checkbox" component="input" name={option.value.toString()} />{option.label}</label>
                                 ))}
                             </div>
                         )} pendingRender={(
