@@ -16,6 +16,7 @@ class Box extends Component {
 
         this.removeFilter = this.removeFilter.bind(this);
         this.clickFilter = this.clickFilter.bind(this);
+        this.deselectFilter = this.deselectFilter.bind(this);
     }
 
     removeFilter(key) {
@@ -35,6 +36,14 @@ class Box extends Component {
         });
     }
 
+    deselectFilter(key) {
+        const {selectedFilter} = this.state;
+
+        if(selectedFilter === key) {
+            this.resetSelection();
+        }
+    }
+
     render() {
 
         const {config, filters, onAddFilter} = this.props;
@@ -52,9 +61,9 @@ class Box extends Component {
 
                     return (
                         <Async key={key} promise={item.getDisplay(value)} then={(val) => (
-                            <Chip id={key} value={value} label={item.label} display={val} onClick={this.clickFilter} onRemove={this.removeFilter} isSelected={key === selectedFilter} config={config} onAddFilter={onAddFilter} />
+                            <Chip id={key} value={value} label={item.label} display={val} onClick={this.clickFilter} onDeselect={this.deselectFilter} onRemove={this.removeFilter} isSelected={key === selectedFilter} config={config} onAddFilter={onAddFilter} />
                         )} pendingRender={(
-                            <Chip id={key} value={value} label={item.label} display="..." onClick={this.clickFilter} onRemove={this.removeFilter} isSelected={key === selectedFilter} config={config} onAddFilter={onAddFilter} />
+                            <Chip id={key} value={value} label={item.label} display="..." onClick={this.clickFilter} onDeselect={this.deselectFilter} onRemove={this.removeFilter} isSelected={key === selectedFilter} config={config} onAddFilter={onAddFilter} />
                         )} />
                     );
                 }

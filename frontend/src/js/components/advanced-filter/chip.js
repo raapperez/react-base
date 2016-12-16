@@ -12,6 +12,7 @@ class Chip extends Component {
         this.remove = this.remove.bind(this);
         this.getId = this.getId.bind(this);
         this.click = this.click.bind(this);
+        this.deselect = this.deselect.bind(this);
     }
 
     getId() {
@@ -38,12 +39,17 @@ class Chip extends Component {
         popup.toggle();
     }
 
+    deselect() {
+        const {onDeselect, id} = this.props;
+        onDeselect(id);
+    }
+
     render() {
 
         const {label, display, isSelected, config, id, onAddFilter, value} = this.props;
 
         return (
-            <Popup ref="popup" config={config} onAddFilter={onAddFilter} selectedItemKey={id} initialValues={{ [id]: value }}>
+            <Popup ref="popup" config={config} onAddFilter={onAddFilter} selectedItemKey={id} initialValues={{ [id]: value }} onClose={this.deselect}>
                 <div className={classNames('chip', { selected: isSelected })} onClick={this.click} >
                     <div className='left'>
                         <label>{label}</label>
@@ -68,7 +74,8 @@ Chip.propTypes = {
     isSelected: PropTypes.bool.isRequired,
     onClick: PropTypes.func.isRequired,
     onAddFilter: PropTypes.func.isRequired,
-    config: PropTypes.object.isRequired
+    config: PropTypes.object.isRequired,
+    onDeselect: PropTypes.func.isRequired
 };
 
 export default Chip;
