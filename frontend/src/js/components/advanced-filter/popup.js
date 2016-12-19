@@ -139,19 +139,7 @@ class Popup extends Component {
         const {selectedItem} = this.state;
         const {selectedItemKey, initialValues} = this.props;
 
-        const parsedInitialValues = {};
-
-        if (selectedItemKey) {
-            _.forEach(initialValues[selectedItemKey], v => parsedInitialValues[v] = true);
-        }
-
-        if (!_pages[selectedItem.key]) {
-            _pages[selectedItem.key] = Multi(selectedItem.key);
-        }
-
-        const Multix = _pages[selectedItem.key];
-
-        return <Multix {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} initialValues={parsedInitialValues} />;
+        return <Multi {...selectedItem.config} onSubmit={this.addFilter} onBack={this.resetSelectedItem} isEdit={!!selectedItemKey} initialValues={initialValues} />;
     }
 
     renderRadio() {

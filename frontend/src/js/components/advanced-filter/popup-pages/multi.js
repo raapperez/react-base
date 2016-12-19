@@ -2,7 +2,6 @@
 
 import React, { Component, PropTypes } from 'react';
 import layout from './layout';
-import { Field, reduxForm, SubmissionError } from 'redux-form';
 import _ from 'lodash';
 import Async from 'react-promise';
 import latinize from 'latinize';
@@ -13,37 +12,26 @@ class Multi extends Component {
         super(props);
 
         this.state = {
-            filter: ''
+            filter: '',
+            form: props.initialValues || {
+                [props.name]: []
+            }
         };
 
         this.setFilter = this.setFilter.bind(this);
         this.submit = this.submit.bind(this);
+        this.checkboxChange = this.checkboxChange.bind(this);
+        this.allSelectedChange = this.allSelectedChange.bind(this);
     }
 
 
-    submit(form) {
-        const {onSubmit, name, parseResult} = this.props;
+    submit(event) {
+        const {onSubmit} = this.props;
+        const {form} = this.state;
 
-        const values = [];
+        event.preventDefault();
 
-        _.forEach(form, (value, key) => {
-            if (value) {
-                if (parseResult) {
-                    values.push(parseResult(key));
-                } else {
-                    values.push(key);
-                }
-
-            }
-        });
-
-        if (!values.length) {
-            return Promise.reject(new SubmissionError({ _error: 'Must select at least one' }));
-        }
-
-        onSubmit({
-            [name]: values
-        });
+        onSubmit(form);
     }
 
     setFilter(filter) {
@@ -52,28 +40,96 @@ class Multi extends Component {
         });
     }
 
+    checkboxChange(event) {
+        const {name, parseResult} = this.props;
+        const value = parseResult(event.target.value);
+
+        const form = this.state.form || {
+            [name]: []
+        };
+
+        const values = form[name];
+
+        if (values.indexOf(value) !== -1) {
+            this.setState({
+                form: {
+                    [name]: _.difference(values, [value])
+                }
+            });
+
+            return;
+        }
+
+        this.setState({
+            form: {
+                [name]: [...values, value].sort()
+            }
+        });
+    }
+
+    allSelectedChange() {
+        const {name, getOptions} = this.props;
+
+        const form = this.state.form || {
+            [name]: []
+        };
+
+        getOptions().then(options => {
+
+            if (form[name].length === options.length) {
+                this.setState({
+                    form: {
+                        [name]: []
+                    }
+                });
+                return;
+            }
+
+            this.setState({
+                form: {
+                    [name]: options.map(option => option.value)
+                }
+            });
+
+        }).catch(err => {
+            console.log(err);
+        });
+
+    }
+
     render() {
 
-        const {title, onBack, backBtn, isEdit, textBtn, handleSubmit, pristine, submitting, getOptions, initialValues} = this.props;
-        const {filter} = this.state;
+        const {title, onBack, name, backBtn, isEdit, textBtn, getOptions, selectAll} = this.props;
+        const {filter, form} = this.state;
 
         const adjustedFilter = latinize(filter.toLowerCase());
         const textBtnValue = textBtn[isEdit ? 'isEdit' : 'default'];
-
-        console.log(initialValues);
 
         return layout(title, !isEdit && onBack, backBtn, (
             <div className="multi-page">
 
                 <input autoFocus className="filter-field" type="text" placeholder="Filtrar..." value={filter} onChange={this.setFilter} />
 
-                <form onSubmit={handleSubmit(this.submit)}>
+                <form onSubmit={this.submit}>
                     <div className="options-box">
 
                         <Async promise={getOptions()} then={(options) => (
                             <div>
+                                {selectAll ? (
+                                    <label>
+                                        <input type="checkbox" checked={options.length === form[name].length} onChange={this.allSelectedChange} /> Todos / Nenhum
+                                </label>
+                                )
+                                    : null
+                                }
+
+                                <hr />
+
                                 {_.sortBy(options, (option => latinize(option.label.toLowerCase()))).filter(option => latinize(option.label.toLowerCase()).indexOf(adjustedFilter) !== -1).map(option => (
-                                    <label key={option.value}><Field type="checkbox" component="input" name={option.value.toString()} />{option.label}</label>
+                                    <label key={option.value}>
+                                        <input type="checkbox" name={name} value={option.value} checked={form[name].indexOf(option.value) !== -1} onChange={this.checkboxChange} />
+                                        {option.label}
+                                    </label>
                                 ))}
                             </div>
                         )} pendingRender={(
@@ -82,7 +138,7 @@ class Multi extends Component {
 
                     </div>
                     <div>
-                        <button className="submit-btn" type="submit" disabled={pristine || submitting}>{textBtnValue}</button>
+                        <button className="submit-btn" type="submit" disabled={form[name].length === 0}>{textBtnValue}</button>
                     </div>
                 </form>
 
@@ -104,11 +160,8 @@ Multi.propTypes = {
     textBtn: PropTypes.object,
     parseResult: PropTypes.func,
     onSubmit: PropTypes.func,
-    handleSubmit: PropTypes.func,
-    pristine: PropTypes.bool,
-    submitting: PropTypes.bool
+    initialValues: PropTypes.object,
+    selectAll: PropTypes.string
 };
 
-export default key => reduxForm({
-    form: `advanced-filter/popup/multi/${key}`
-})(Multi);
+export default Multi;

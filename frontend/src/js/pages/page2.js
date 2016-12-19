@@ -238,6 +238,7 @@ class Page2Page extends Component {
                         backBtn,
                         getOptions: getCategoriesOptions,
                         textBtn,
+                        selectAll: 'Todos / Nenhum',
                         parseResult: parseInt
 
                     }
@@ -263,6 +264,7 @@ class Page2Page extends Component {
                         backBtn,
                         getOptions: getNeighborhoodsOptions,
                         textBtn,
+                        selectAll: 'Todos / Nenhum',
                         parseResult: parseInt
                     }
                 },
@@ -336,6 +338,7 @@ class Page2Page extends Component {
                         backBtn,
                         getOptions: getStatusOptions,
                         textBtn,
+                        selectAll: 'Todos / Nenhum',
                         parseResult: parseInt
                     }
                 },
