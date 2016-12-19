@@ -314,7 +314,8 @@ class Page2Page extends Component {
                             week: 'Semana',
                             month: 'Mês',
                             year: 'Ano'
-                        }
+                        },
+                        dateFormat: 'DD/MM/YYYY'
                     }
                 },
                 {

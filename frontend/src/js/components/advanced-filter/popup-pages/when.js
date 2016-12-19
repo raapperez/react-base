@@ -66,14 +66,14 @@ class When extends Component {
     }
 
     renderStaticForm() {
-        const {name, textBtn, isEdit, onSubmit, handleSubmit, pristine, submitting, invalid} = this.props;
+        const {name, textBtn, isEdit, onSubmit, handleSubmit, pristine, submitting, invalid, dateFormat} = this.props;
         const textBtnValue = textBtn[isEdit ? 'isEdit' : 'default'];
 
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
 
                 <div className="picker-wrapper">
-                    <Field name={name} component={this.renderDatePicker} />
+                    <Field name={name} component={this.renderDatePicker} dateFormat={dateFormat} />
                 </div>
 
                 <div>
@@ -132,7 +132,8 @@ When.propTypes = {
     submitting: PropTypes.bool,
     initialValues: PropTypes.object,
     relativeDateTexts: PropTypes.object,
-    invalid: PropTypes.bool
+    invalid: PropTypes.bool,
+    dateFormat: PropTypes.string.isRequired
 };
 
 const validate = values => {

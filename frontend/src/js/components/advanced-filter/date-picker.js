@@ -86,6 +86,7 @@ class DatePicker extends Component {
             event.preventDefault();
 
             const {value} = this.state;
+            const {dateFormat} = this.props;
             let theValue = value;
 
             if (typeof theValue !== 'object') {
@@ -93,7 +94,7 @@ class DatePicker extends Component {
             }
 
             const isOne = theValue && theValue.end.diff(theValue.start) === 0;
-            const newValue = moment(event.target.value, 'DD/MM/YYYY', true);
+            const newValue = moment(event.target.value, dateFormat, true);
 
             if (!newValue.isValid()) {
                 this.setState({
@@ -138,7 +139,8 @@ class DatePicker extends Component {
             event.preventDefault();
 
             const {value} = this.state;
-            const newValue = moment(event.target.value, 'DD/MM/YYYY', true);
+            const {dateFormat} = this.props;
+            const newValue = moment(event.target.value, dateFormat, true);
 
             if (!newValue.isValid()) {
                 this.setState({
@@ -167,8 +169,10 @@ class DatePicker extends Component {
     }
 
     renderInputText(value, onChange, onKeyPress) {
+        const {dateFormat} = this.props;
+
         return (
-            <input className={classNames({ invalid: !moment(value, 'DD/MM/YYYY', true).isValid() })} type="text" value={value} onChange={onChange} onKeyPress={onKeyPress} />
+            <input className={classNames({ invalid: !moment(value, dateFormat, true).isValid() })} type="text" value={value} onChange={onChange} onKeyPress={onKeyPress} />
         );
     }
 
@@ -226,7 +230,8 @@ class DatePicker extends Component {
 
 DatePicker.propTypes = {
     value: PropTypes.any,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    dateFormat: PropTypes.string.isRequired
 };
 
 export default DatePicker;
