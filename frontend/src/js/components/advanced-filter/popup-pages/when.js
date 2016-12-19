@@ -66,7 +66,7 @@ class When extends Component {
     }
 
     renderStaticForm() {
-        const {name, textBtn, isEdit, onSubmit, handleSubmit, pristine, submitting} = this.props;
+        const {name, textBtn, isEdit, onSubmit, handleSubmit, pristine, submitting, invalid} = this.props;
         const textBtnValue = textBtn[isEdit ? 'isEdit' : 'default'];
 
         return (
@@ -77,7 +77,7 @@ class When extends Component {
                 </div>
 
                 <div>
-                    <button className="submit-btn" type="submit" disabled={pristine || submitting}>{textBtnValue}</button>
+                    <button className="submit-btn" type="submit" disabled={pristine || submitting || invalid}>{textBtnValue}</button>
                 </div>
             </form>
         );
@@ -131,9 +131,23 @@ When.propTypes = {
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     initialValues: PropTypes.object,
-    relativeDateTexts: PropTypes.object
+    relativeDateTexts: PropTypes.object,
+    invalid: PropTypes.bool
+};
+
+const validate = values => {
+    const errors = {};
+
+    if(typeof values.when === 'object') {
+        if(values.when.start > values.when.end) {
+            errors.when = 'Start date is greater than end date';
+        }
+    }
+
+    return errors;
 };
 
 export default key => reduxForm({
-    form: `advanced-filter/popup/when/${key}`
+    form: `advanced-filter/popup/when/${key}`,
+    validate
 })(When);
