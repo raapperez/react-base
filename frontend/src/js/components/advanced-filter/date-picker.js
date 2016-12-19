@@ -35,6 +35,9 @@ class DatePicker extends Component {
         this.startDateChange = this.startDateChange.bind(this);
         this.endDateChange = this.endDateChange.bind(this);
 
+        this.startDateBlur = this.startDateBlur.bind(this);
+        this.endDateBlur = this.endDateBlur.bind(this);
+
         this.startDateKeyPress = this.startDateKeyPress.bind(this);
         this.endDateKeyPress = this.endDateKeyPress.bind(this);
         this.notify = this.notify.bind(this);
@@ -83,43 +86,8 @@ class DatePicker extends Component {
 
     startDateKeyPress(event) {
         if (event.key === 'Enter') {
-            event.preventDefault();
-
-            const {value} = this.state;
-            const {dateFormat} = this.props;
-            let theValue = value;
-
-            if (typeof theValue !== 'object') {
-                theValue = null;
-            }
-
-            const isOne = theValue && theValue.end.diff(theValue.start) === 0;
-            const newValue = moment(event.target.value, dateFormat, true);
-
-            if (!newValue.isValid()) {
-                this.setState({
-                    bottomValue: {
-                        start: value.start.format('L'),
-                        end: value.end.format('L')
-                    }
-                });
-                return;
-            }
-
-            const nextValue = moment.range(newValue, isOne ? newValue : value.end);
-
-            this.setState({
-                bottomValue: {
-                    start: newValue.format('L'),
-                    end: isOne ? newValue.format('L') : value.end.format('L')
-                },
-                value: nextValue
-            }, () => {
-                this.notify(nextValue);
-            });
-
+            this.startDateBlur(event);
         }
-
     }
 
     endDateChange(event) {
@@ -133,46 +101,85 @@ class DatePicker extends Component {
         });
     }
 
-
     endDateKeyPress(event) {
         if (event.key === 'Enter') {
-            event.preventDefault();
+            this.endDateBlur(event);
+        }
+    }
 
-            const {value} = this.state;
-            const {dateFormat} = this.props;
-            const newValue = moment(event.target.value, dateFormat, true);
+    startDateBlur(event) {
+        event.preventDefault();
 
-            if (!newValue.isValid()) {
-                this.setState({
-                    bottomValue: {
-                        start: value.start.format('L'),
-                        end: value.end.format('L')
-                    }
-                });
-                return;
-            }
+        const {value} = this.state;
+        const {dateFormat} = this.props;
+        let theValue = value;
 
-            const nextValue = moment.range(value.start, newValue);
+        if (typeof theValue !== 'object') {
+            theValue = null;
+        }
 
+        const isOne = theValue && theValue.end.diff(theValue.start) === 0;
+        const newValue = moment(event.target.value, dateFormat, true);
+
+        if (!newValue.isValid()) {
             this.setState({
                 bottomValue: {
                     start: value.start.format('L'),
-                    end: newValue.format('L')
-                },
-                value: nextValue
-            }, () => {
-                this.notify(nextValue);
+                    end: value.end.format('L')
+                }
             });
-
+            return;
         }
 
+        const nextValue = moment.range(newValue, isOne ? newValue : value.end);
+
+        this.setState({
+            bottomValue: {
+                start: newValue.format('L'),
+                end: isOne ? newValue.format('L') : value.end.format('L')
+            },
+            value: nextValue
+        }, () => {
+            this.notify(nextValue);
+        });
     }
 
-    renderInputText(value, onChange, onKeyPress) {
+    endDateBlur(event) {
+        event.preventDefault();
+
+        const {value} = this.state;
+        const {dateFormat} = this.props;
+        const newValue = moment(event.target.value, dateFormat, true);
+
+        if (!newValue.isValid()) {
+            this.setState({
+                bottomValue: {
+                    start: value.start.format('L'),
+                    end: value.end.format('L')
+                }
+            });
+            return;
+        }
+
+        const nextValue = moment.range(value.start, newValue);
+
+        this.setState({
+            bottomValue: {
+                start: value.start.format('L'),
+                end: newValue.format('L')
+            },
+            value: nextValue
+        }, () => {
+            this.notify(nextValue);
+        });
+    }
+
+
+    renderInputText(value, onChange, onKeyPress, onBlur) {
         const {dateFormat} = this.props;
 
         return (
-            <input className={classNames({ invalid: !moment(value, dateFormat, true).isValid() })} type="text" value={value} onChange={onChange} onKeyPress={onKeyPress} />
+            <input className={classNames({ invalid: !moment(value, dateFormat, true).isValid() })} type="text" value={value} onChange={onChange} onKeyPress={onKeyPress} onBlur={onBlur} />
         );
     }
 
@@ -208,13 +215,13 @@ class DatePicker extends Component {
                     (isOne ?
                         (
                             <div className="display">
-                                {this.renderInputText(bottomValue.start, this.startDateChange, this.startDateKeyPress)}
+                                {this.renderInputText(bottomValue.start, this.startDateChange, this.startDateKeyPress, this.startDateBlur)}
                             </div>
                         ) : (
                             <div className="display">
-                                {this.renderInputText(bottomValue.start, this.startDateChange, this.startDateKeyPress)}
+                                {this.renderInputText(bottomValue.start, this.startDateChange, this.startDateKeyPress, this.startDateBlur)}
                                 <span> - </span>
-                                {this.renderInputText(bottomValue.end, this.endDateChange, this.endDateKeyPress)}
+                                {this.renderInputText(bottomValue.end, this.endDateChange, this.endDateKeyPress, this.endDateBlur)}
                             </div>
                         )
                     )
